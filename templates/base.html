@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}CU Notes{% endblock %}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+    <header class="topbar">
+
+        <a class="brand" href="{{ url_for('index') }}">
+
+            <span class="brand-mark">N</span>
+
+            <span>
+                Note Hub
+                <small>Student notes, shared simply</small>
+            </span>
+
+        </a>
+
+        <nav>
+
+            <a href="{{ url_for('index') }}">
+                নোট খুঁজুন
+            </a>
+
+            <a
+                class="nav-button"
+                href="{{ url_for('upload') }}"
+            >
+                + নোট আপলোড
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <main class="container">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div class="flash {{ category }}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+
+    </main>
+
+
+    <footer>
+
+        CU Notes · শিক্ষার্থীদের তৈরি নোট শেয়ার করার প্ল্যাটফর্ম
+
+    </footer>
+
+</body>
+
+</html>

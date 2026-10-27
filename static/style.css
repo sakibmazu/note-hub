@@ -1,0 +1,730 @@
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --navy: #132b4a;
+    --blue: #246bfe;
+    --pale: #edf4ff;
+    --ink: #1d2b3c;
+    --muted: #728096;
+    --line: #e5ebf3;
+    --bg: #f8faff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Hind Siliguri', 'Inter', sans-serif;
+    font-size: 16px;
+}
+
+.topbar {
+    min-height: 78px;
+    padding: 12px max(calc((100% - 1160px)/2), 24px);
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    text-decoration: none;
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 21px;
+}
+
+.brand small {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 400;
+}
+
+.brand-mark {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 13px;
+    background: var(--blue);
+    color: white;
+    font-family: Inter, sans-serif;
+    font-weight: 800;
+}
+
+.topbar nav {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.topbar nav a {
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.topbar nav .nav-button {
+    background: var(--blue);
+    color: white;
+    padding: 11px 17px;
+    border-radius: 10px;
+}
+
+.container {
+    max-width: 1160px;
+    margin: auto;
+    padding: 30px 24px 60px;
+}
+
+.hero {
+    background: linear-gradient(
+        120deg,
+        #e9f2ff,
+        #f4f8ff 60%,
+        #e4efff
+    );
+    border: 1px solid #dce8fb;
+    border-radius: 24px;
+    padding: 48px 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 310px;
+    overflow: hidden;
+}
+
+.hero-copy {
+    max-width: 600px;
+}
+
+.eyebrow {
+    color: var(--blue);
+    font: 700 11px Inter, sans-serif;
+    letter-spacing: 1.6px;
+}
+
+.hero h1,
+.form-intro h1 {
+    font-size: 43px;
+    line-height: 1.2;
+    color: var(--navy);
+    margin: 13px 0;
+}
+
+.hero h1 span,
+.form-intro h1 span {
+    color: var(--blue);
+}
+
+.hero p,
+.form-intro p {
+    color: #61718a;
+    line-height: 1.8;
+    max-width: 480px;
+}
+
+.button {
+    border: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    border-radius: 10px;
+    padding: 12px 18px;
+    font: 600 15px 'Hind Siliguri', sans-serif;
+    cursor: pointer;
+}
+
+.primary {
+    background: var(--blue);
+    color: #fff;
+    box-shadow: 0 6px 14px #246bfe22;
+}
+
+.secondary {
+    background: #edf3ff;
+    color: var(--blue);
+}
+
+.hero .button {
+    margin-top: 12px;
+}
+
+.hero-art {
+    position: relative;
+    width: 270px;
+    height: 220px;
+    flex-shrink: 0;
+}
+
+.hero-circle {
+    position: absolute;
+    width: 170px;
+    height: 170px;
+    right: 42px;
+    top: 23px;
+    background: #d1e2ff;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: #246bfe;
+    font: 800 40px Inter, sans-serif;
+}
+
+.paper {
+    position: absolute;
+    z-index: 2;
+    background: #fff;
+    border: 1px solid #e0e8f4;
+    border-radius: 12px;
+    box-shadow: 0 15px 30px #254d8420;
+    width: 130px;
+    height: 145px;
+    padding: 24px 16px;
+    font-size: 32px;
+    transform: rotate(-9deg);
+}
+
+.paper small {
+    display: block;
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 15px;
+}
+
+.p1 {
+    top: 22px;
+    left: 3px;
+}
+
+.p2 {
+    right: 0;
+    bottom: 0;
+    transform: rotate(9deg);
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin: 42px 0 18px;
+}
+
+.section-heading h2 {
+    font-size: 27px;
+    color: var(--navy);
+    margin: 6px 0;
+}
+
+.section-heading p {
+    color: var(--muted);
+    margin: 0;
+}
+
+.count,
+.pill {
+    font-size: 12px;
+    background: #eaf1ff;
+    color: #3569bd;
+    padding: 7px 11px;
+    border-radius: 30px;
+    white-space: nowrap;
+}
+
+.searchbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 10px 12px;
+    margin-bottom: 24px;
+}
+
+.searchbar > span {
+    font-size: 25px;
+    color: #8997aa;
+    padding: 0 5px;
+}
+
+.searchbar input {
+    min-width: 0;
+    flex: 1;
+    border: 0;
+    outline: 0;
+    font: 15px 'Hind Siliguri', sans-serif;
+    padding: 9px;
+}
+
+.searchbar input:nth-of-type(2) {
+    max-width: 190px;
+    border-left: 1px solid var(--line);
+    padding-left: 16px;
+}
+
+.notes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.note-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 22px;
+    transition: .15s;
+}
+
+.note-card:hover {
+    border-color: #b9d0ff;
+    transform: translateY(-2px);
+}
+
+.card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.file-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 43px;
+    height: 48px;
+    background: #fff0f0;
+    color: #e34e56;
+    border-radius: 9px;
+    font: 800 11px Inter, sans-serif;
+    border: 1px solid #ffe0e0;
+}
+
+.note-card h3 {
+    font-size: 19px;
+    line-height: 1.4;
+    margin: 17px 0 7px;
+}
+
+.note-card h3 a {
+    color: var(--navy);
+    text-decoration: none;
+}
+
+.course {
+    font-size: 13px;
+    color: var(--blue);
+    font-weight: 600;
+}
+
+.description {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+    min-height: 45px;
+}
+
+.card-footer {
+    border-top: 1px solid var(--line);
+    padding-top: 14px;
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.card-footer a {
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.notice {
+    margin-top: 30px;
+    padding: 16px 18px;
+    background: #fff8e8;
+    border: 1px solid #f5e5b9;
+    color: #79602c;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 65px 20px;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+}
+
+.empty-icon {
+    font-size: 38px;
+    color: var(--blue);
+}
+
+.empty-state h3,
+.empty-state h2 {
+    color: var(--navy);
+}
+
+.empty-state p {
+    color: var(--muted);
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #8793a4;
+    font-size: 13px;
+    border-top: 1px solid var(--line);
+    background: white;
+}
+
+.flash {
+    padding: 13px 16px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+}
+
+.flash.success {
+    background: #e5f8ee;
+    color: #176b44;
+}
+
+.flash.error {
+    background: #fff0f0;
+    color: #a32b35;
+}
+
+.form-layout {
+    display: grid;
+    grid-template-columns: .8fr 1.2fr;
+    gap: 45px;
+    align-items: start;
+    padding: 30px 0;
+}
+
+.form-intro {
+    padding: 28px 0;
+}
+
+.upload-tip {
+    margin-top: 35px;
+    padding: 18px;
+    background: #eaf3ff;
+    color: #315a95;
+    line-height: 2;
+    border-radius: 12px;
+    font-size: 14px;
+}
+
+.upload-form,
+.detail-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 30px;
+}
+
+.upload-form h2 {
+    color: var(--navy);
+    margin: 0;
+}
+
+.muted {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.upload-form label {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    margin: 18px 0;
+    color: #34445a;
+}
+
+.upload-form input:not([type=checkbox]):not([type=file]),
+.upload-form textarea {
+    display: block;
+    width: 100%;
+    margin-top: 7px;
+    padding: 12px;
+    border: 1px solid #dce4ef;
+    border-radius: 9px;
+    outline-color: #8db3ff;
+    font: 15px 'Hind Siliguri', sans-serif;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.file-picker {
+    border: 1px dashed #9ab8f4;
+    background: #f5f8ff;
+    padding: 18px;
+    border-radius: 12px;
+}
+
+.file-picker input {
+    display: block;
+    margin-top: 12px;
+    max-width: 100%;
+}
+
+.file-picker small {
+    display: block;
+    color: var(--muted);
+    font-weight: 400;
+    margin-top: 7px;
+}
+
+.checkbox {
+    display: flex !important;
+    gap: 10px;
+    align-items: start;
+    font-weight: 400 !important;
+    line-height: 1.6;
+}
+
+.checkbox input {
+    margin-top: 6px;
+}
+
+.full {
+    width: 100%;
+    margin-top: 8px;
+}
+
+.back-link {
+    display: inline-block;
+    color: var(--blue);
+    text-decoration: none;
+    margin: 10px 0 20px;
+}
+
+.detail-layout {
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: 22px;
+}
+
+.file-icon.large {
+    width: 58px;
+    height: 65px;
+    font-size: 13px;
+    margin-right: 12px;
+}
+
+.detail-card h1 {
+    font-size: 30px;
+    color: var(--navy);
+    margin-bottom: 5px;
+}
+
+.detail-card > p {
+    line-height: 1.8;
+}
+
+.meta {
+    display: flex;
+    justify-content: space-between;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+}
+
+.meta span {
+    color: var(--muted);
+}
+
+.detail-card .button {
+    margin-top: 22px;
+}
+
+.preview-box {
+    background: #edf4ff;
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 35px;
+}
+
+.preview-icon {
+    font-size: 54px;
+    color: var(--blue);
+}
+
+.preview-box h3 {
+    color: var(--navy);
+}
+
+.preview-box p {
+    max-width: 280px;
+    color: #667994;
+    line-height: 1.8;
+}
+
+.small {
+    font-size: 12px;
+}
+
+
+/* Responsive design for phones and tablets */
+
+@media (max-width: 800px) {
+
+    .hero {
+        padding: 32px 25px;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .hero-art {
+        transform: scale(.75);
+        transform-origin: center right;
+        width: 200px;
+        margin-left: -20px;
+    }
+
+    .notes-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .form-layout {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .form-intro {
+        padding: 0;
+    }
+
+    .detail-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .searchbar {
+        flex-wrap: wrap;
+    }
+
+    .searchbar input {
+        flex-basis: 60%;
+    }
+}
+
+
+@media (max-width: 540px) {
+
+    .topbar {
+        height: auto;
+        min-height: 72px;
+        padding: 12px 16px;
+    }
+
+    .brand {
+        font-size: 18px;
+    }
+
+    .topbar nav {
+        gap: 10px;
+    }
+
+    .topbar nav > a:first-child {
+        display: none;
+    }
+
+    .topbar nav .nav-button {
+        padding: 9px 11px;
+        font-size: 13px;
+    }
+
+    .container {
+        padding: 20px 15px 40px;
+    }
+
+    .hero {
+        padding: 27px 22px;
+        min-height: 0;
+    }
+
+    .hero-art {
+        display: none;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .section-heading {
+        align-items: start;
+        gap: 10px;
+    }
+
+    .section-heading h2 {
+        font-size: 22px;
+    }
+
+    .section-heading p {
+        font-size: 13px;
+    }
+
+    .count {
+        margin-top: 18px;
+    }
+
+    .notes-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .searchbar {
+        gap: 5px;
+    }
+
+    .searchbar input {
+        flex-basis: 100%;
+        border-bottom: 1px solid var(--line);
+        padding: 10px;
+    }
+
+    .searchbar input:nth-of-type(2) {
+        border-left: 0;
+        max-width: none;
+        padding-left: 10px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .upload-form,
+    .detail-card {
+        padding: 22px;
+    }
+
+    .form-intro h1 {
+        font-size: 36px;
+    }
+
+}

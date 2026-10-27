@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+
+{% block title %}
+Note Hub — নোট খুঁজুন
+{% endblock %}
+
+
+{% block content %}
+
+<section class="hero">
+
+    <div class="hero-copy">
+
+        <span class="eyebrow">
+            STUDENT-TO-STUDENT LEARNING
+        </span>
+
+        <h1>
+            ভালো নোট,<br>
+            <span>সবার জন্য সহজলভ্য।</span>
+        </h1>
+
+        <p>
+            নিজের তৈরি ক্লাস নোট শেয়ার করো।
+            অন্য শিক্ষার্থীদের নোট খুঁজে পড়াশোনায় এগিয়ে যাও।
+        </p>
+
+        <a
+            class="button primary"
+            href="{{ url_for('upload') }}"
+        >
+            নিজের নোট শেয়ার করো ↗
+        </a>
+
+    </div>
+
+
+    <div class="hero-art">
+
+        <div class="paper p1">
+            📄
+            <small>Lecture Notes</small>
+        </div>
+
+        <div class="paper p2">
+            📘
+            <small>Economics</small>
+        </div>
+
+        <div class="hero-circle">
+            CU
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section-heading">
+
+    <div>
+
+        <span class="eyebrow">
+            THE NOTE LIBRARY
+        </span>
+
+        <h2>
+            শেখার জন্য নোট খুঁজুন
+        </h2>
+
+        <p>
+            কোর্স, টপিক বা শিক্ষার্থীর নাম দিয়ে সার্চ করো।
+        </p>
+
+    </div>
+
+    <span class="count">
+        {{ notes|length }} টি নোট
+    </span>
+
+</section>
+
+
+<form
+    class="searchbar"
+    method="get"
+    action="{{ url_for('index') }}"
+>
+
+    <span>⌕</span>
+
+    <input
+        name="q"
+        value="{{ q }}"
+        placeholder="নোট, কোর্স বা শিক্ষার্থীর নাম লিখুন..."
+    >
+
+    <input
+        name="course"
+        value="{{ course }}"
+        placeholder="Course filter"
+    >
+
+    <button
+        class="button primary"
+        type="submit"
+    >
+        সার্চ
+    </button>
+
+</form>
+
+
+{% if notes %}
+
+<div class="notes-grid">
+
+    {% for note in notes %}
+
+    <article class="note-card">
+
+        <div class="card-top">
+
+            <span class="file-icon">
+                PDF
+            </span>
+
+            <span class="pill">
+                {{ note['semester'] }}
+            </span>
+
+        </div>
+
+
+        <h3>
+
+            <a href="{{ url_for(
+                'note_detail',
+                note_id=note['id']
+            ) }}">
+
+                {{ note['title'] }}
+
+            </a>
+
+        </h3>
+
+
+        <p class="course">
+
+            {{ note['course'] }}
+            ·
+            {{ note['department'] }}
+
+        </p>
+
+
+        <p class="description">
+
+            {{ note['description'] or
+            'এই নোটের জন্য কোনো বিবরণ দেওয়া হয়নি।' }}
+
+        </p>
+
+
+        <div class="card-footer">
+
+            <span>
+                ✎ {{ note['author'] }}
+            </span>
+
+            <a href="{{ url_for(
+                'note_detail',
+                note_id=note['id']
+            ) }}">
+
+                দেখুন ↗
+
+            </a>
+
+        </div>
+
+    </article>
+
+    {% endfor %}
+
+</div>
+
+
+{% else %}
+
+<div class="empty-state">
+
+    <div class="empty-icon">
+        📚
+    </div>
+
+    <h3>
+        এখনো কোনো নোট নেই
+    </h3>
+
+    <p>
+        প্রথম নোটটি শেয়ার করে লাইব্রেরি শুরু করো।
+    </p>
+
+    <a
+        class="button primary"
+        href="{{ url_for('upload') }}"
+    >
+        নোট আপলোড করুন
+    </a>
+
+</div>
+
+{% endif %}
+
+
+<div class="notice">
+
+    <strong>একটি ছোট অনুরোধ:</strong>
+
+    শুধু নিজের তৈরি নোট বা শেয়ার করার অনুমতি আছে
+    এমন PDF আপলোড করো।
+
+</div>
+
+{% endblock %}

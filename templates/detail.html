@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ note['title'] }} — CU Notes
+{% endblock %}
+
+
+{% block content %}
+
+<a
+    class="back-link"
+    href="{{ url_for('index') }}"
+>
+    ← সব নোটে ফিরে যান
+</a>
+
+
+<div class="detail-layout">
+
+    <section class="detail-card">
+
+        <span class="file-icon large">
+            PDF
+        </span>
+
+        <span class="pill">
+            {{ note['semester'] }}
+        </span>
+
+
+        <h1>
+            {{ note['title'] }}
+        </h1>
+
+
+        <p class="course">
+
+            {{ note['course'] }}
+            ·
+            {{ note['department'] }}
+
+        </p>
+
+
+        <p>
+            {{ note['description'] or
+            'কোনো বিবরণ দেওয়া হয়নি।' }}
+        </p>
+
+
+        <div class="meta">
+
+            <span>নোটদাতা</span>
+
+            <strong>
+                {{ note['author'] }}
+            </strong>
+
+        </div>
+
+
+        <div class="meta">
+
+            <span>আপলোড</span>
+
+            <strong>
+                {{ note['created_at'] }}
+            </strong>
+
+        </div>
+
+
+        <a
+            class="button primary full"
+            href="{{ url_for(
+                'download',
+                note_id=note['id']
+            ) }}"
+        >
+
+            ↓ PDF ডাউনলোড করুন
+
+        </a>
+
+
+        <p class="muted small">
+
+            ফাইলটি ব্যবহার করার অনুমতি আছে কি না
+            নিশ্চিত হয়ে ব্যবহার করো।
+
+        </p>
+
+    </section>
+
+
+    <aside class="preview-box">
+
+        <div class="preview-icon">
+            ▤
+        </div>
+
+        <h3>
+            PDF নোট
+        </h3>
+
+        <p>
+            এই সংস্করণে PDF ফাইল ডাউনলোড করা যাবে।
+        </p>
+
+        <a
+            class="button secondary"
+            href="{{ url_for(
+                'download',
+                note_id=note['id']
+            ) }}"
+        >
+
+            ফাইল ডাউনলোড
+
+        </a>
+
+    </aside>
+
+</div>
+
+{% endblock %}

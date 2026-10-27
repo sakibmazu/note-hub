@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+পেজ পাওয়া যায়নি — CU Notes
+{% endblock %}
+
+
+{% block content %}
+
+<div class="empty-state">
+
+    <div class="empty-icon">
+        404
+    </div>
+
+    <h2>
+        পেজটি পাওয়া যায়নি
+    </h2>
+
+    <p>
+        লিংকটি ভুল হতে পারে অথবা নোটটি নেই।
+    </p>
+
+    <a
+        class="button primary"
+        href="{{ url_for('index') }}"
+    >
+
+        হোমপেজে ফিরুন
+
+    </a>
+
+</div>
+
+{% endblock %}
