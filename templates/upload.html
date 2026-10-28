@@ -4,186 +4,197 @@
 নোট আপলোড — CU Notes
 {% endblock %}
 
-
 {% block content %}
 
 <div class="form-layout">
 
-    <div class="form-intro">
+```
+<div class="form-intro">
 
-        <span class="eyebrow">
-            CONTRIBUTE TO THE LIBRARY
-        </span>
+    <span class="eyebrow">
+        CONTRIBUTE TO THE LIBRARY
+    </span>
 
-        <h1>
-            তোমার নোট<br>
-            <span>শেয়ার করো।</span>
-        </h1>
+    <h1>
+        তোমার নোট<br>
+        <span>শেয়ার করো।</span>
+    </h1>
 
-        <p>
-            তোমার তৈরি পরিষ্কার ও উপকারী নোট
-            অন্য শিক্ষার্থীদের সাহায্য করতে পারে।
-        </p>
+    <p>
+        তোমার তৈরি পরিষ্কার ও উপকারী নোট
+        অন্য শিক্ষার্থীদের সাহায্য করতে পারে।
+    </p>
 
-        <div class="upload-tip">
+    <div class="upload-tip">
+        ✓ PDF format only<br>
+        ✓ Maximum file size: 20 MB<br>
+        ✓ Upload only notes you can share
+    </div>
 
-            ✓ PDF format only<br>
+</div>
 
-            ✓ Maximum file size: 20 MB<br>
+<form
+    class="upload-form"
+    method="post"
+    enctype="multipart/form-data"
+>
 
-            ✓ Upload only notes you can share
+    <h2>নোটের তথ্য</h2>
 
-        </div>
+    <p class="muted">
+        * চিহ্নিত সব ঘর পূরণ করতে হবে।
+    </p>
+
+    <label>
+        নোটের শিরোনাম *
+
+        <input
+            name="title"
+            required
+            maxlength="150"
+            placeholder="যেমন: Introduction to Microeconomics"
+        >
+    </label>
+
+    <div class="form-row">
+
+        <label>
+            বিভাগ *
+
+            <input
+                name="department"
+                required
+                value="Economics"
+                placeholder="Economics"
+            >
+        </label>
+
+        <label>
+            নোটদাতার নাম *
+
+            <input
+                name="author"
+                required
+                maxlength="80"
+                placeholder="তোমার নাম"
+            >
+        </label>
 
     </div>
 
+    <label>
+        সেমিস্টার নির্বাচন করো *
 
-    <form
-        class="upload-form"
-        method="post"
-        enctype="multipart/form-data"
-    >
+        <select name="semester" id="semester" required>
+            <option value="">-- Semester নির্বাচন করো --</option>
+            <option value="1st year 1st semester">1st Semester</option>
+            <option value="1st year 2nd semester">2nd Semester</option>
+        </select>
+    </label>
 
-        <h2>
-            নোটের তথ্য
-        </h2>
+    <label>
+        কোর্স নির্বাচন করো *
 
-        <p class="muted">
-            * চিহ্নিত সব ঘর পূরণ করতে হবে।
-        </p>
+        <select name="course" id="course" required disabled>
+            <option value="">-- আগে Semester নির্বাচন করো --</option>
+        </select>
+    </label>
 
+    <label>
+        সংক্ষিপ্ত বিবরণ
 
-        <label>
+        <textarea
+            name="description"
+            rows="3"
+            maxlength="500"
+            placeholder="এই নোটে কী কী বিষয় আছে?"
+        ></textarea>
+    </label>
 
-            নোটের শিরোনাম *
+    <label class="file-picker">
+        PDF ফাইল নির্বাচন করো *
 
-            <input
-                name="title"
-                required
-                maxlength="150"
-                placeholder="যেমন: Introduction to Microeconomics"
-            >
-
-        </label>
-
-
-        <div class="form-row">
-
-            <label>
-
-                কোর্সের নাম *
-
-                <input
-                    name="course"
-                    required
-                    placeholder="যেমন: Microeconomics"
-                >
-
-            </label>
-
-
-            <label>
-
-                বিভাগ *
-
-                <input
-                    name="department"
-                    required
-                    placeholder="যেমন: Economics"
-                >
-
-            </label>
-
-        </div>
-
-
-        <div class="form-row">
-
-            <label>
-
-                সেমিস্টার/বর্ষ *
-
-                <input
-                    name="semester"
-                    required
-                    placeholder="যেমন: 1st Year"
-                >
-
-            </label>
-
-
-            <label>
-
-                নোটদাতার নাম *
-
-                <input
-                    name="author"
-                    required
-                    maxlength="80"
-                    placeholder="তোমার নাম"
-                >
-
-            </label>
-
-        </div>
-
-
-        <label>
-
-            সংক্ষিপ্ত বিবরণ
-
-            <textarea
-                name="description"
-                rows="3"
-                maxlength="500"
-                placeholder="এই নোটে কী কী বিষয় আছে?"
-            ></textarea>
-
-        </label>
-
-
-        <label class="file-picker">
-
-            PDF ফাইল নির্বাচন করো *
-
-            <input
-                type="file"
-                name="note_file"
-                accept=".pdf,application/pdf"
-                required
-            >
-
-            <small>
-                শুধু PDF · সর্বোচ্চ ২০ MB
-            </small>
-
-        </label>
-
-
-        <label class="checkbox">
-
-            <input
-                type="checkbox"
-                required
-            >
-
-            আমি নিশ্চিত করছি যে এই ফাইলটি আমার নিজের তৈরি
-            অথবা আমার এটি শেয়ার করার অনুমতি আছে।
-
-        </label>
-
-
-        <button
-            class="button primary full"
-            type="submit"
+        <input
+            type="file"
+            name="note_file"
+            accept=".pdf,application/pdf"
+            required
         >
 
-            নোট আপলোড করুন ↗
+        <small>শুধু PDF · সর্বোচ্চ ২০ MB</small>
+    </label>
 
-        </button>
+    <label class="checkbox">
+        <input type="checkbox" required>
 
-    </form>
+        আমি নিশ্চিত করছি যে এই ফাইলটি আমার নিজের তৈরি
+        অথবা আমার এটি শেয়ার করার অনুমতি আছে।
+    </label>
+
+    <button
+        class="button primary full"
+        type="submit"
+    >
+        নোট আপলোড করুন ↗
+    </button>
+
+</form>
+```
 
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const semesterSelect = document.getElementById("semester");
+    const courseSelect = document.getElementById("course");
+
+    const coursesBySemester = {
+        "1st year 1st semester": [
+            "Macroeconomics",
+            "Microeconomics",
+            "Mathematics",
+            "Economic History of Bangladesh",
+            "Statistics",
+            "Quantitative Techniques Lab"
+        ],
+
+        "1st year 2nd semester": [
+            "Microeconomics",
+            "Macroeconomics theory",
+            "Mathematical Economics",
+            "Statistics",
+            "Functional and Communicative English",
+            "Fundamentals of Computing",
+            "Comprehensive"
+        ]
+    };
+
+    semesterSelect.addEventListener("change", function () {
+
+        const courses = coursesBySemester[semesterSelect.value] || [];
+
+        courseSelect.innerHTML = "";
+
+        const placeholder = document.createElement("option");
+        placeholder.value = "";
+        placeholder.textContent = courses.length
+            ? "-- কোর্স নির্বাচন করো --"
+            : "-- আগে Semester নির্বাচন করো --";
+
+        courseSelect.appendChild(placeholder);
+
+        courses.forEach(function (courseName) {
+            const option = document.createElement("option");
+            option.value = courseName;
+            option.textContent = courseName;
+            courseSelect.appendChild(option);
+        });
+
+        courseSelect.disabled = courses.length === 0;
+    });
+
+});
+</script>
 
 {% endblock %}

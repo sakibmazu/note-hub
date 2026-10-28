@@ -4,16 +4,11 @@
 Note Hub — নোট খুঁজুন
 {% endblock %}
 
-
 {% block content %}
 
 <section class="hero">
-
     <div class="hero-copy">
-
-        <span class="eyebrow">
-            STUDENT-TO-STUDENT LEARNING
-        </span>
+        <span class="eyebrow">STUDENT-TO-STUDENT LEARNING</span>
 
         <h1>
             ভালো নোট,<br>
@@ -25,18 +20,12 @@ Note Hub — নোট খুঁজুন
             অন্য শিক্ষার্থীদের নোট খুঁজে পড়াশোনায় এগিয়ে যাও।
         </p>
 
-        <a
-            class="button primary"
-            href="{{ url_for('upload') }}"
-        >
+        <a class="button primary" href="{{ url_for('upload') }}">
             নিজের নোট শেয়ার করো ↗
         </a>
-
     </div>
 
-
     <div class="hero-art">
-
         <div class="paper p1">
             📄
             <small>Lecture Notes</small>
@@ -47,181 +36,262 @@ Note Hub — নোট খুঁজুন
             <small>Economics</small>
         </div>
 
-        <div class="hero-circle">
-            CU
-        </div>
-
+        <div class="hero-circle">CU</div>
     </div>
-
 </section>
 
 
-<section class="section-heading">
+<!-- Search -->
+<section class="library-section">
 
-    <div>
+    <div class="section-heading">
+        <div>
+            <span class="eyebrow">THE NOTE LIBRARY</span>
+            <h2>শেখার জন্য নোট খুঁজুন</h2>
+            <p>নোট, কোর্স অথবা শিক্ষার্থীর নাম দিয়ে সার্চ করো।</p>
+        </div>
 
-        <span class="eyebrow">
-            THE NOTE LIBRARY
-        </span>
-
-        <h2>
-            শেখার জন্য নোট খুঁজুন
-        </h2>
-
-        <p>
-            কোর্স, টপিক বা শিক্ষার্থীর নাম দিয়ে সার্চ করো।
-        </p>
-
+        <span class="count">{{ notes|length }} টি নোট</span>
     </div>
 
-    <span class="count">
-        {{ notes|length }} টি নোট
-    </span>
+    <form class="searchbar" method="get" action="{{ url_for('index') }}">
+        <span>⌕</span>
+
+        <input
+            type="text"
+            name="q"
+            value="{{ q }}"
+            placeholder="নোট বা কোর্সের নাম লিখুন..."
+        >
+
+        <button class="button primary" type="submit">
+            সার্চ
+        </button>
+    </form>
+
+
+    {% if q %}
+
+        <!-- Search results -->
+        <div class="section-heading">
+            <div>
+                <h2>সার্চের ফলাফল</h2>
+            </div>
+
+            <a class="back-link" href="{{ url_for('index') }}">
+                ← সব Semester
+            </a>
+        </div>
+
+        {% if notes %}
+            <div class="notes-grid">
+
+                {% for note in notes %}
+                    <article class="note-card">
+
+                        <div class="card-top">
+                            <span class="file-icon">PDF</span>
+                            <span class="pill">{{ note['semester'] }}</span>
+                        </div>
+
+                        <h3>
+                            <a href="{{ url_for('note_detail', note_id=note['id']) }}">
+                                {{ note['title'] }}
+                            </a>
+                        </h3>
+
+                        <p class="course">
+                            {{ note['course'] }} · {{ note['department'] }}
+                        </p>
+
+                        <p class="description">
+                            {{ note['description'] or 'এই নোটের জন্য কোনো বিবরণ দেওয়া হয়নি।' }}
+                        </p>
+
+                        <div class="card-footer">
+                            <span>✎ {{ note['author'] }}</span>
+
+                            <a href="{{ url_for('note_detail', note_id=note['id']) }}">
+                                দেখুন ↗
+                            </a>
+                        </div>
+
+                    </article>
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">🔎</div>
+                <h3>কোনো নোট পাওয়া যায়নি</h3>
+                <p>অন্য কোনো শব্দ দিয়ে সার্চ করে দেখো।</p>
+            </div>
+        {% endif %}
+
+
+    {% elif semester %}
+
+        <!-- Selected semester -->
+        <div class="section-heading">
+            <div>
+                <span class="eyebrow">SELECTED SEMESTER</span>
+                <h2>{{ semester|title }}</h2>
+                <p>তোমার পছন্দের কোর্স নির্বাচন করো।</p>
+            </div>
+
+            <a class="back-link" href="{{ url_for('index') }}">
+                ← সব Semester
+            </a>
+        </div>
+
+
+        {% if not course %}
+
+            {% if courses %}
+                <div class="category-grid">
+
+                    {% for item in courses %}
+                        <a
+                            class="category-card course-card"
+                            href="{{ url_for('index', semester=semester, course=item.course) }}"
+                        >
+                            <div class="category-icon">📚</div>
+
+                            <div>
+                                <h3>{{ item.course }}</h3>
+                                <p>এই কোর্সের নোট দেখুন</p>
+                            </div>
+
+                            <span class="category-arrow">↗</span>
+                        </a>
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">📚</div>
+                    <h3>এই Semester-এ এখনো কোনো Course নেই</h3>
+                    <p>এই Semester নির্বাচন করে নতুন নোট আপলোড করতে পারো।</p>
+
+                    <a class="button primary" href="{{ url_for('upload') }}">
+                        নোট আপলোড করুন
+                    </a>
+                </div>
+            {% endif %}
+
+
+        {% else %}
+
+            <!-- Selected course notes -->
+            <div class="section-heading">
+                <div>
+                    <h2>{{ course }}</h2>
+                    <p>এই কোর্সের নোটগুলো এখানে পাওয়া যাবে।</p>
+                </div>
+
+                <a
+                    class="back-link"
+                    href="{{ url_for('index', semester=semester) }}"
+                >
+                    ← সব Course
+                </a>
+            </div>
+
+
+            {% if notes %}
+                <div class="notes-grid">
+
+                    {% for note in notes %}
+                        <article class="note-card">
+
+                            <div class="card-top">
+                                <span class="file-icon">PDF</span>
+                                <span class="pill">{{ note['semester'] }}</span>
+                            </div>
+
+                            <h3>
+                                <a href="{{ url_for('note_detail', note_id=note['id']) }}">
+                                    {{ note['title'] }}
+                                </a>
+                            </h3>
+
+                            <p class="course">
+                                {{ note['course'] }} · {{ note['department'] }}
+                            </p>
+
+                            <p class="description">
+                                {{ note['description'] or 'এই নোটের জন্য কোনো বিবরণ দেওয়া হয়নি।' }}
+                            </p>
+
+                            <div class="card-footer">
+                                <span>✎ {{ note['author'] }}</span>
+
+                                <a href="{{ url_for('note_detail', note_id=note['id']) }}">
+                                    দেখুন ↗
+                                </a>
+                            </div>
+
+                        </article>
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">📄</div>
+                    <h3>এই Course-এ এখনো কোনো নোট নেই</h3>
+                    <p>এই কোর্সের প্রথম নোটটি শেয়ার করো।</p>
+
+                    <a class="button primary" href="{{ url_for('upload') }}">
+                        নোট আপলোড করুন
+                    </a>
+                </div>
+            {% endif %}
+
+        {% endif %}
+
+
+    {% else %}
+
+        <!-- Semester selection -->
+        <div class="section-heading">
+            <div>
+                <span class="eyebrow">CHOOSE YOUR SEMESTER</span>
+                <h2>তোমার Semester নির্বাচন করো</h2>
+                <p>Semester নির্বাচন করে নিজের প্রয়োজনীয় নোট খুঁজে নাও।</p>
+            </div>
+        </div>
+
+        <div class="category-grid">
+
+            {% for item in semesters %}
+                <a
+                    class="category-card semester-card"
+                    href="{{ url_for('index', semester=item.name) }}"
+                >
+                    <div class="category-icon">🎓</div>
+
+                    <div>
+                        <h3>{{ item.label }}</h3>
+                        <p>কোর্স ও নোট দেখতে ক্লিক করো</p>
+                    </div>
+
+                    <span class="category-arrow">↗</span>
+                </a>
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
 
 </section>
-
-
-<form
-    class="searchbar"
-    method="get"
-    action="{{ url_for('index') }}"
->
-
-    <span>⌕</span>
-
-    <input
-        name="q"
-        value="{{ q }}"
-        placeholder="নোট, কোর্স বা শিক্ষার্থীর নাম লিখুন..."
-    >
-
-    <input
-        name="course"
-        value="{{ course }}"
-        placeholder="Course filter"
-    >
-
-    <button
-        class="button primary"
-        type="submit"
-    >
-        সার্চ
-    </button>
-
-</form>
-
-
-{% if notes %}
-
-<div class="notes-grid">
-
-    {% for note in notes %}
-
-    <article class="note-card">
-
-        <div class="card-top">
-
-            <span class="file-icon">
-                PDF
-            </span>
-
-            <span class="pill">
-                {{ note['semester'] }}
-            </span>
-
-        </div>
-
-
-        <h3>
-
-            <a href="{{ url_for(
-                'note_detail',
-                note_id=note['id']
-            ) }}">
-
-                {{ note['title'] }}
-
-            </a>
-
-        </h3>
-
-
-        <p class="course">
-
-            {{ note['course'] }}
-            ·
-            {{ note['department'] }}
-
-        </p>
-
-
-        <p class="description">
-
-            {{ note['description'] or
-            'এই নোটের জন্য কোনো বিবরণ দেওয়া হয়নি।' }}
-
-        </p>
-
-
-        <div class="card-footer">
-
-            <span>
-                ✎ {{ note['author'] }}
-            </span>
-
-            <a href="{{ url_for(
-                'note_detail',
-                note_id=note['id']
-            ) }}">
-
-                দেখুন ↗
-
-            </a>
-
-        </div>
-
-    </article>
-
-    {% endfor %}
-
-</div>
-
-
-{% else %}
-
-<div class="empty-state">
-
-    <div class="empty-icon">
-        📚
-    </div>
-
-    <h3>
-        এখনো কোনো নোট নেই
-    </h3>
-
-    <p>
-        প্রথম নোটটি শেয়ার করে লাইব্রেরি শুরু করো।
-    </p>
-
-    <a
-        class="button primary"
-        href="{{ url_for('upload') }}"
-    >
-        নোট আপলোড করুন
-    </a>
-
-</div>
-
-{% endif %}
 
 
 <div class="notice">
-
     <strong>একটি ছোট অনুরোধ:</strong>
-
-    শুধু নিজের তৈরি নোট বা শেয়ার করার অনুমতি আছে
-    এমন PDF আপলোড করো।
-
+    শুধু নিজের তৈরি নোট বা শেয়ার করার অনুমতি আছে এমন PDF আপলোড করো।
 </div>
 
 {% endblock %}
