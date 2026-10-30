@@ -1,88 +1,273 @@
+```html
 <!DOCTYPE html>
 <html lang="bn">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <title>{% block title %}Note Hub{% endblock %}</title>
 
-    <title>
-        {% block title %}CU Notes{% endblock %}
-    </title>
+    <meta name="description"
+          content="Note Hub — শিক্ষার্থীদের নোট খোঁজা, পড়া ও শেয়ার করার প্ল্যাটফর্ম।">
 
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='style.css') }}"
-    >
+    <style>
+        :root {
+            --primary: #15803d;
+            --primary-dark: #166534;
+            --primary-light: #dcfce7;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text: #172033;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --danger: #b91c1c;
+        }
 
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+        }
+
+        .site-header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            width: min(1120px, 92%);
+            min-height: 76px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text);
+            font-size: 25px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .brand-icon {
+            font-size: 30px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        nav > a:not(.nav-button) {
+            color: var(--text);
+            padding: 8px 10px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        nav > a:not(.nav-button):hover {
+            color: var(--primary);
+        }
+
+        .nav-button {
+            display: inline-block;
+            border: 0;
+            border-radius: 9px;
+            padding: 10px 15px;
+            background: var(--primary);
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .nav-button:hover {
+            background: var(--primary-dark);
+            color: white;
+        }
+
+        .nav-secondary {
+            background: #e2e8f0;
+            color: var(--text);
+        }
+
+        .nav-secondary:hover {
+            background: #cbd5e1;
+            color: var(--text);
+        }
+
+        .nav-logout-form {
+            margin: 0;
+        }
+
+        .user-email {
+            color: var(--muted);
+            font-size: 13px;
+            overflow-wrap: anywhere;
+        }
+
+        main {
+            width: min(1120px, 92%);
+            margin: 0 auto;
+            padding: 28px 0 45px;
+            flex: 1;
+        }
+
+        .flash-container {
+            margin: 0 0 22px;
+        }
+
+        .flash-message {
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            background: white;
+            overflow-wrap: anywhere;
+        }
+
+        .flash-message.success {
+            background: #f0fdf4;
+            border-color: #86efac;
+            color: #166534;
+        }
+
+        .flash-message.error,
+        .flash-message.danger {
+            background: #fef2f2;
+            border-color: #fca5a5;
+            color: var(--danger);
+        }
+
+        .flash-message.warning {
+            background: #fffbeb;
+            border-color: #fcd34d;
+            color: #92400e;
+        }
+
+        .flash-message.info {
+            background: #eff6ff;
+            border-color: #93c5fd;
+            color: #1d4ed8;
+        }
+
+        .site-footer {
+            background: white;
+            border-top: 1px solid var(--border);
+            margin-top: auto;
+        }
+
+        .footer-inner {
+            width: min(1120px, 92%);
+            min-height: 65px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        @media (max-width: 720px) {
+            .header-inner {
+                padding: 14px 0;
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            nav {
+                justify-content: flex-start;
+                width: 100%;
+                gap: 7px;
+            }
+
+            nav > a:not(.nav-button) {
+                padding: 8px 6px;
+            }
+
+            .brand {
+                font-size: 23px;
+            }
+
+            .user-email {
+                max-width: 100%;
+            }
+
+            .footer-inner {
+                padding: 15px 0;
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+
+    {% block head %}{% endblock %}
 </head>
 
 <body>
 
-    <header class="topbar">
+    <header class="site-header">
+        <div class="header-inner">
 
-        <a class="brand" href="{{ url_for('index') }}">
-
-            <span class="brand-mark">N</span>
-
-            <span>
-                Note Hub
-                <small>Student notes, shared simply</small>
-            </span>
-
-        </a>
-
-        <nav>
-
-            <a href="{{ url_for('index') }}">
-                নোট খুঁজুন
+            <a class="brand" href="{{ url_for('index') }}">
+                <span class="brand-icon">📚</span>
+                <span>Note Hub</span>
             </a>
 
-            <a
-                class="nav-button"
-                href="{{ url_for('upload') }}"
-            >
-                + নোট আপলোড
-            </a>
+            <nav>
+                <a href="{{ url_for('index') }}">
+                    নোট খুঁজুন
+                </a>
 
-        </nav>
+                {% if session.get('user_id') %}
 
-    </header>
-
-
-    <main class="container">
-
-        {% with messages = get_flashed_messages(with_categories=true) %}
-
-            {% if messages %}
-
-                {% for category, message in messages %}
-
-                    <div class="flash {{ category }}">
-                        {{ message }}
-                    </div>
-
-                {% endfor %}
-
-            {% endif %}
-
-        {% endwith %}
-
-        {% block content %}{% endblock %}
-
-    </main>
-
-
-    <footer>
-
-        CU Notes · শিক্ষার্থীদের তৈরি নোট শেয়ার করার প্ল্যাটফর্ম
-
-    </footer>
-
-</body>
-
-</html>
+                    <a class="nav-button" href="{{ url_for('upload') }}">
+```

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}লগইন — Note Hub{% endblock %}
+
+{% block content %}
+
+<div class="form-layout">
+
+```
+<div class="form-intro">
+
+    <span class="eyebrow">WELCOME BACK</span>
+
+    <h1>
+        আবার ফিরে<br>
+        <span>এসো।</span>
+    </h1>
+
+    <p>
+        লগইন করে তোমার নোট শেয়ার করো
+        এবং অন্য শিক্ষার্থীদের নোট ব্যবহার করো।
+    </p>
+
+    <div class="upload-tip">
+        ✓ সহজে নোট খুঁজে নাও<br>
+        ✓ শিক্ষার্থীদের সঙ্গে নোট শেয়ার করো<br>
+        ✓ নিজের নোট আপলোড করো
+    </div>
+
+</div>
+
+<form
+    class="upload-form"
+    method="post"
+    action="{{ url_for('login') }}"
+>
+
+    <h2>অ্যাকাউন্টে লগইন</h2>
+
+    <p class="muted">
+        তোমার রেজিস্টার করা Email ও Password ব্যবহার করো।
+    </p>
+
+    <label>
+        Email Address *
+
+        <input
+            type="email"
+            name="email"
+            required
+            maxlength="254"
+            autocomplete="email"
+            placeholder="তোমার ইমেইল"
+        >
+    </label>
+
+    <label>
+        Password *
+
+        <input
+            type="password"
+            name="password"
+            required
+            autocomplete="current-password"
+            placeholder="তোমার পাসওয়ার্ড"
+        >
+    </label>
+
+    <button
+        class="button primary full"
+        type="submit"
+    >
+        লগইন করো ↗
+    </button>
+
+    <p class="muted">
+        অ্যাকাউন্ট নেই?
+        <a href="{{ url_for('register') }}">
+            রেজিস্ট্রেশন করো
+        </a>
+    </p>
+
+</form>
+```
+
+</div>
+
+{% endblock %}

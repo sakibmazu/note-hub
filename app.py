@@ -3,18 +3,11 @@ import io
 from datetime import datetime, timezone
 
 from dotenv import load_dotenv
-from flask import (
-    Flask,
-    render_template,
-    request,
-    redirect,
-    url_for,
-    flash,
-    abort,
-    send_file,
-)
+from flask import Flask, render_template, request, redirect, url_for, flash, abort, send_file, session
+
+from flask_session import Session
 from werkzeug.utils import secure_filename
-from supabase import create_client
+from supabase import create_client, ClientOptions
 
 
 # ==========================================
@@ -78,6 +71,18 @@ app.secret_key = os.environ.get(
 )
 
 app.config["MAX_CONTENT_LENGTH"] = MAX_FILE_SIZE
+
+# Server-side session configuration
+app.config["SESSION_TYPE"] = "filesystem"
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_USE_SIGNER"] = True
+app.config["SESSION_COOKIE_HTTPONLY"] = True
+app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+app.config["SESSION_COOKIE_SECURE"] = (
+    os.environ.get("RENDER") == "true"
+)
+
+Session(app)
 
 
 if not SUPABASE_URL or not SUPABASE_KEY:
@@ -265,9 +270,21 @@ def index():
 
 @app.route("/upload", methods=["GET", "POST"])
 def upload():
+    if not session.get("access_token") or not session.get("user_id"):
+        flash("PDF Upload করতে আগে Login করো।", "error")
+        return redirect(url_for("login"))
+
     if request.method == "GET":
         return render_template("upload.html")
-
+    user_supabase = create_client(
+        SUPABASE_URL,
+        SUPABASE_KEY,
+        options=ClientOptions(
+            headers={
+                "Authorization": f"Bearer {session['access_token']}"
+            }
+        ),
+    )
     title = request.form.get("title", "").strip()
     course = request.form.get("course", "").strip()
     department = request.form.get("department", "").strip()
@@ -323,7 +340,7 @@ def upload():
 
     try:
         # Upload PDF to Supabase Storage.
-        supabase.storage.from_(BUCKET_NAME).upload(
+        user_supabase.storage.from_(BUCKET_NAME).upload(
             path=storage_path,
             file=file_bytes,
             file_options={
@@ -335,7 +352,7 @@ def upload():
         uploaded = True
 
         file_url = (
-            supabase.storage
+            user_supabase.storage
             .from_(BUCKET_NAME)
             .get_public_url(storage_path)
         )
@@ -344,7 +361,7 @@ def upload():
 
         # Save note details in the existing database.
         result = (
-            supabase.table("notes")
+            user_supabase.table("notes")
             .insert({
                 "title": title,
                 "course": course,
@@ -467,6 +484,121 @@ def not_found(error):
 # ==========================================
 # RUN APPLICATION
 # ==========================================
+# ==========================================
+# USER REGISTRATION
+# ==========================================
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+
+    if request.method == "GET":
+        return render_template("register.html")
+
+    student_id = request.form.get("student_id", "").strip()
+    email = request.form.get("email", "").strip().lower()
+    password = request.form.get("password", "")
+    confirm_password = request.form.get("confirm_password", "")
+
+    if not student_id or not email or not password or not confirm_password:
+        flash("সব ঘর পূরণ করো।", "error")
+        return redirect(url_for("register"))
+
+    if password != confirm_password:
+        flash("দুটি Password এক নয়। আবার চেষ্টা করো।", "error")
+        return redirect(url_for("register"))
+
+    if len(password) < 8:
+        flash("Password কমপক্ষে ৮ অক্ষরের হতে হবে।", "error")
+        return redirect(url_for("register"))
+
+    try:
+        result = supabase.auth.sign_up({
+            "email": email,
+            "password": password,
+            "options": {
+                "data": {
+                    "student_id": student_id
+                }
+            }
+        })
+
+        if result.user:
+            flash(
+                "Registration সফল হয়েছে! এখন Email ও Password দিয়ে Login করো।",
+                "success",
+            )
+            return redirect(url_for("login"))
+
+        flash("Registration সম্পন্ন হয়নি। আবার চেষ্টা করো।", "error")
+        return redirect(url_for("register"))
+
+    except Exception:
+        app.logger.exception("Registration failed")
+        flash(
+            "Registration করা যায়নি। Email আগে ব্যবহার করা হয়েছে কি না যাচাই করো।",
+            "error",
+        )
+        return redirect(url_for("register"))
+
+
+# ==========================================
+
+# USER LOGIN
+
+# ==========================================
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "GET":
+        return render_template("login.html")
+
+    email = request.form.get("email", "").strip().lower()
+    password = request.form.get("password", "")
+
+    if not email or not password:
+        flash("Email ও Password লিখো।", "error")
+        return redirect(url_for("login"))
+
+    try:
+        result = supabase.auth.sign_in_with_password({
+            "email": email,
+            "password": password,
+        })
+
+        if result.user and result.session:
+            session.clear()
+            session["user_id"] = result.user.id
+            session["email"] = result.user.email
+            session["access_token"] = result.session.access_token
+            session["refresh_token"] = result.session.refresh_token
+
+            flash("Login সফল হয়েছে!", "success")
+            return redirect(url_for("index"))
+
+        flash("Login করা যায়নি। আবার চেষ্টা করো।", "error")
+        return redirect(url_for("login"))
+
+    except Exception:
+        app.logger.exception("Login failed")
+        flash(
+            "Email অথবা Password সঠিক নয়। আবার চেষ্টা করো।",
+            "error",
+        )
+        return redirect(url_for("login"))
+
+
+# ==========================================
+
+# USER LOGOUT
+
+# ==========================================
+
+@app.route("/logout", methods=["POST"])
+def logout():
+    session.clear()
+    flash("তুমি সফলভাবে Logout করেছ।", "success")
+    return redirect(url_for("index"))
+
 
 if __name__ == "__main__":
     app.run(debug=True)

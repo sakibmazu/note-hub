@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}রেজিস্ট্রেশন — Note Hub{% endblock %}
+
+{% block content %}
+
+<div class="form-layout">
+
+```
+<div class="form-intro">
+    <span class="eyebrow">JOIN NOTE HUB</span>
+
+    <h1>
+        তোমার অ্যাকাউন্ট<br>
+        <span>তৈরি করো।</span>
+    </h1>
+
+    <p>
+        বিশ্ববিদ্যালয়ের শিক্ষার্থীদের সঙ্গে নোট শেয়ার করো
+        এবং নিজের পড়াশোনাকে আরও সহজ করো।
+    </p>
+</div>
+
+<form class="upload-form" method="post" action="{{ url_for('register') }}">
+
+    <h2>নতুন অ্যাকাউন্ট</h2>
+
+    <p class="muted">
+        সব ঘর পূরণ করা বাধ্যতামূলক।
+    </p>
+
+    <label>
+        Student ID *
+
+        <input
+            type="text"
+            name="student_id"
+            required
+            maxlength="50"
+            autocomplete="username"
+            placeholder="তোমার Student ID"
+        >
+    </label>
+
+    <label>
+        Email Address *
+
+        <input
+            type="email"
+            name="email"
+            required
+            maxlength="254"
+            autocomplete="email"
+            placeholder="তোমার ইমেইল"
+        >
+    </label>
+
+    <label>
+        Password *
+
+        <input
+            type="password"
+            name="password"
+            required
+            minlength="8"
+            autocomplete="new-password"
+            placeholder="কমপক্ষে ৮ অক্ষর"
+        >
+    </label>
+
+    <label>
+        Confirm Password *
+
+        <input
+            type="password"
+            name="confirm_password"
+            required
+            minlength="8"
+            autocomplete="new-password"
+            placeholder="পাসওয়ার্ড আবার লিখো"
+        >
+    </label>
+
+    <button class="button primary full" type="submit">
+        অ্যাকাউন্ট তৈরি করো ↗
+    </button>
+
+    <p class="muted">
+        আগে থেকেই অ্যাকাউন্ট আছে?
+        <a href="{{ url_for('login') }}">লগইন করো</a>
+    </p>
+
+</form>
+```
+
+</div>
+
+{% endblock %}
