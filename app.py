@@ -461,7 +461,60 @@ def download(note_id):
         ),
     )
 
+# ==========================================
+# SYLLABUS PDF PREVIEW & DOWNLOAD
+# ==========================================
 
+SYLLABUS_FILE = "1st-semester-syllabus.pdf"
+
+
+@app.route("/syllabus/preview")
+def syllabus_preview():
+    try:
+        file_bytes = (
+            supabase.storage
+            .from_(BUCKET_NAME)
+            .download(SYLLABUS_FILE)
+        )
+
+    except Exception:
+        app.logger.exception("Syllabus preview failed")
+        abort(404)
+
+    return send_file(
+        io.BytesIO(file_bytes),
+        mimetype="application/pdf",
+        as_attachment=False,
+        download_name=SYLLABUS_FILE,
+    )
+
+
+@app.route("/syllabus/download")
+def syllabus_download():
+    try:
+        file_bytes = (
+            supabase.storage
+            .from_(BUCKET_NAME)
+            .download(SYLLABUS_FILE)
+        )
+
+    except Exception:
+        app.logger.exception("Syllabus download failed")
+        abort(404)
+
+    return send_file(
+        io.BytesIO(file_bytes),
+        mimetype="application/pdf",
+        as_attachment=True,
+        download_name=SYLLABUS_FILE,
+    )
+# ==========================================
+# SYLLABUS PAGE
+# ==========================================
+
+@app.route("/syllabus")
+def syllabus():
+    return render_template("syllabus.html")
 # ==========================================
 # ERROR HANDLERS
 # ==========================================

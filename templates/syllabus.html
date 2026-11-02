@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block title %}Syllabus — Notonomy{% endblock %}
+
+{% block extra_css %}
+
+.syllabus-section {
+max-width: 1100px;
+width: 90%;
+margin: 65px auto;
+}
+
+.syllabus-heading {
+text-align: center;
+margin-bottom: 45px;
+}
+
+.syllabus-heading h1 {
+color: var(--primary-dark);
+font-size: 38px;
+margin-bottom: 12px;
+}
+
+.syllabus-heading p {
+color: var(--muted);
+font-size: 16px;
+}
+
+.syllabus-card {
+max-width: 650px;
+margin: 0 auto;
+padding: 32px;
+background: white;
+border: 1px solid var(--border);
+border-radius: 20px;
+box-shadow: var(--shadow);
+transition: 0.2s ease;
+}
+
+.syllabus-card:hover {
+transform: translateY(-4px);
+}
+
+.syllabus-icon {
+width: 65px;
+height: 65px;
+display: flex;
+align-items: center;
+justify-content: center;
+background: var(--primary-light);
+color: var(--primary);
+border-radius: 16px;
+font-size: 30px;
+margin-bottom: 22px;
+}
+
+.syllabus-card h2 {
+color: var(--primary-dark);
+font-size: 25px;
+margin: 0 0 10px;
+}
+
+.syllabus-card p {
+color: var(--muted);
+line-height: 1.8;
+font-size: 15px;
+}
+
+.syllabus-actions {
+display: flex;
+flex-wrap: wrap;
+gap: 12px;
+margin-top: 25px;
+}
+
+.syllabus-btn {
+display: inline-flex;
+justify-content: center;
+align-items: center;
+padding: 13px 22px;
+border-radius: 11px;
+font-weight: 700;
+background: var(--primary);
+color: white;
+transition: 0.2s;
+}
+
+.syllabus-btn:hover {
+background: var(--primary-dark);
+color: white;
+}
+
+.syllabus-btn.secondary {
+background: var(--primary-light);
+color: var(--primary-dark);
+}
+
+.syllabus-btn.secondary:hover {
+background: var(--accent);
+}
+
+@media (max-width: 500px) {
+.syllabus-heading h1 {
+font-size: 30px;
+}
+
+```
+.syllabus-card {
+    padding: 23px;
+}
+
+.syllabus-actions {
+    flex-direction: column;
+}
+```
+
+}
+
+{% endblock %}
+
+{% block content %}
+
+<section class="syllabus-section">
+
+```
+<div class="syllabus-heading">
+    <h1>Academic Syllabus</h1>
+    <p>Find your semester syllabus in one place.</p>
+</div>
+
+<div class="syllabus-card">
+
+    <div class="syllabus-icon">📚</div>
+
+    <h2>1st Semester</h2>
+
+    <p>
+        University of Chittagong<br>
+        Department of Economics<br>
+        Complete First Semester Syllabus
+    </p>
+
+    <div class="syllabus-actions">
+
+        <a href="{{ url_for('syllabus_preview') }}"
+           target="_blank"
+           class="syllabus-btn">
+            Read Online
+        </a>
+
+        <a href="{{ url_for('syllabus_download') }}"
+           class="syllabus-btn secondary">
+            Download PDF
+        </a>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+{% endblock %}
