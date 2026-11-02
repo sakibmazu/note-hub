@@ -270,4 +270,64 @@
                 {% if session.get('user_id') %}
 
                     <a class="nav-button" href="{{ url_for('upload') }}">
+                        নোট আপলোড
+                    </a>
+
+                    <span class="user-email">
+                        {{ session.get('email', '') }}
+                    </span>
+
+                    <form class="nav-logout-form"
+                          action="{{ url_for('logout') }}"
+                          method="POST">
+                        <button class="nav-button nav-secondary" type="submit">
+                            লগ আউট
+                        </button>
+                    </form>
+
+                {% else %}
+
+                    <a class="nav-button nav-secondary"
+                       href="{{ url_for('login') }}">
+                        লগ ইন
+                    </a>
+
+                    <a class="nav-button"
+                       href="{{ url_for('register') }}">
+                        রেজিস্ট্রেশন
+                    </a>
+
+                {% endif %}
+            </nav>
+
+        </div>
+    </header>
+
+    <main>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-container">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <span>© {{ now.year if now is defined else 2026 }} Note Hub</span>
+            <span>Student-to-Student Learning</span>
+        </div>
+    </footer>
+
+</body>
+</html>
 ```
