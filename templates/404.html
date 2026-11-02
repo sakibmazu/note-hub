@@ -1,35 +1,145 @@
 {% extends "base.html" %}
 
-{% block title %}
-পেজ পাওয়া যায়নি — CU Notes
+{% block title %}404 — Page Not Found | Notonomy{% endblock %}
+
+
+{% block extra_css %}
+
+/* =========================
+   NOTONOMY 404 PAGE
+========================= */
+
+.error-page {
+    min-height: 75vh;
+    padding: 60px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background:
+        radial-gradient(circle at 50% 10%, #e3f2d7 0, transparent 40%),
+        #f5f8f4;
+}
+
+.error-content {
+    max-width: 570px;
+    margin: auto;
+}
+
+.error-number {
+    font-size: clamp(110px, 20vw, 180px);
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: -10px;
+    color: #15803d;
+    text-shadow: 7px 7px 0 #d7ef91;
+    margin-bottom: 25px;
+}
+
+.error-label {
+    display: inline-block;
+    padding: 8px 16px;
+    background: #e3f5df;
+    color: #15803d;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.error-content h1 {
+    color: #10432f;
+    font-size: clamp(27px, 5vw, 38px);
+    font-weight: 850;
+    margin-bottom: 15px;
+}
+
+.error-content p {
+    color: #758279;
+    font-size: 16px;
+    line-height: 1.9;
+    max-width: 430px;
+    margin: 0 auto 30px;
+}
+
+.error-home {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px 27px;
+    background: #15803d;
+    color: #ffffff;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 800;
+    transition: 0.2s ease;
+}
+
+.error-home:hover {
+    background: #10432f;
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(16, 67, 47, 0.18);
+}
+
+.error-hint {
+    margin-top: 35px;
+    color: #a0aaa2;
+    font-size: 13px;
+}
+
+@media (max-width: 480px) {
+    .error-page {
+        min-height: 70vh;
+    }
+
+    .error-number {
+        letter-spacing: -6px;
+    }
+}
+
 {% endblock %}
 
 
 {% block content %}
 
-<div class="empty-state">
+<section class="error-page">
 
-    <div class="empty-icon">
-        404
+    <div class="error-content">
+
+        <span class="error-label">
+            PAGE NOT FOUND
+        </span>
+
+        <div class="error-number">
+            404
+        </div>
+
+        <h1>
+            পেজটি খুঁজে পাওয়া যায়নি!
+        </h1>
+
+        <p>
+            দুঃখিত! তুমি যে পেজটি খুঁজছো সেটি পাওয়া যাচ্ছে না।
+            লিংকটি ভুল হতে পারে অথবা পেজটি সরিয়ে ফেলা হয়েছে।
+        </p>
+
+        <a
+            class="error-home"
+            href="{{ url_for('index') }}"
+        >
+            ← Homepage-এ ফিরে যাও
+        </a>
+
+        <div class="error-hint">
+            Keep learning. Keep sharing. — Notonomy
+        </div>
+
     </div>
 
-    <h2>
-        পেজটি পাওয়া যায়নি
-    </h2>
-
-    <p>
-        লিংকটি ভুল হতে পারে অথবা নোটটি নেই।
-    </p>
-
-    <a
-        class="button primary"
-        href="{{ url_for('index') }}"
-    >
-
-        হোমপেজে ফিরুন
-
-    </a>
-
-</div>
+</section>
 
 {% endblock %}

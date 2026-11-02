@@ -1,6 +1,25 @@
+# Python
 .venv/
 __pycache__/
 *.pyc
+
+# Environment and secrets
 .env
+.env.*
+
+# Database
 *.db
+
+# Uploaded files
 uploads/*
+
+# Flask session
+flask_session/
+
+# Backup files
+*-backup.py
+*-backup.py.py
+app-old,py.py
+
+# Test files
+test_supabase.py

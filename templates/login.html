@@ -1,88 +1,372 @@
 {% extends "base.html" %}
 
-{% block title %}লগইন — Note Hub{% endblock %}
+{% block title %}Login — Notonomy{% endblock %}
+
+{% block extra_css %}
+
+/* =========================
+   NOTONOMY LOGIN PAGE
+========================= */
+
+.login-page {
+    min-height: 75vh;
+    padding: 65px 6%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(circle at 10% 10%, #e3f2d7 0, transparent 30%),
+        #f5f8f4;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 1100px;
+    display: grid;
+    grid-template-columns: 1fr 0.9fr;
+    align-items: center;
+    gap: 65px;
+}
+
+/* Left introduction */
+
+.login-intro {
+    padding: 25px 0;
+}
+
+.login-eyebrow {
+    display: inline-block;
+    color: #15803d;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    margin-bottom: 22px;
+}
+
+.login-intro h1 {
+    color: #10432f;
+    font-size: clamp(38px, 5vw, 62px);
+    line-height: 1.15;
+    font-weight: 850;
+    letter-spacing: -2px;
+    margin: 0 0 22px;
+}
+
+.login-intro h1 span {
+    color: #75a83b;
+}
+
+.login-intro > p {
+    max-width: 480px;
+    color: #65736a;
+    font-size: 17px;
+    line-height: 1.9;
+}
+
+.login-benefits {
+    margin-top: 35px;
+    display: grid;
+    gap: 16px;
+}
+
+.login-benefit {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    color: #294b38;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.login-check {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #dff2cf;
+    color: #15803d;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+/* Login form card */
+
+.login-card {
+    background: #ffffff;
+    padding: 42px;
+    border: 1px solid #e4ebe3;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(16, 67, 47, 0.10);
+}
+
+.login-card-header {
+    margin-bottom: 30px;
+}
+
+.login-card-header .small-label {
+    color: #15803d;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.login-card-header h2 {
+    color: #10432f;
+    font-size: 30px;
+    margin: 12px 0 8px;
+    font-weight: 800;
+}
+
+.login-card-header p {
+    color: #77837a;
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* Form */
+
+.login-form {
+    display: grid;
+    gap: 20px;
+}
+
+.login-form label {
+    display: grid;
+    gap: 9px;
+    color: #294b38;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.login-form input {
+    width: 100%;
+    min-height: 52px;
+    padding: 13px 15px;
+    border: 1px solid #dce6dd;
+    border-radius: 11px;
+    background: #fbfdfb;
+    color: #17251d;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+.login-form input:focus {
+    border-color: #15803d;
+    box-shadow: 0 0 0 4px rgba(21, 128, 61, 0.10);
+    background: #ffffff;
+}
+
+.login-form input::placeholder {
+    color: #a2aca4;
+}
+
+.login-submit {
+    width: 100%;
+    min-height: 54px;
+    border: none;
+    border-radius: 12px;
+    background: #15803d;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.2s ease;
+    margin-top: 5px;
+}
+
+.login-submit:hover {
+    background: #10432f;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 67, 47, 0.18);
+}
+
+.login-register {
+    text-align: center;
+    color: #77837a;
+    font-size: 14px;
+    margin: 25px 0 0;
+}
+
+.login-register a {
+    color: #15803d;
+    font-weight: 800;
+}
+
+.login-register a:hover {
+    color: #10432f;
+    text-decoration: underline;
+}
+
+/* Responsive */
+
+@media (max-width: 800px) {
+    .login-page {
+        padding: 40px 5%;
+    }
+
+    .login-container {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        max-width: 520px;
+    }
+
+    .login-intro {
+        text-align: center;
+    }
+
+    .login-intro > p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .login-benefits {
+        display: inline-grid;
+        text-align: left;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-card {
+        padding: 28px 22px;
+        border-radius: 18px;
+    }
+
+    .login-card-header h2 {
+        font-size: 25px;
+    }
+
+    .login-intro h1 {
+        font-size: 39px;
+    }
+}
+
+{% endblock %}
+
 
 {% block content %}
 
-<div class="form-layout">
+<section class="login-page">
 
-```
-<div class="form-intro">
+    <div class="login-container">
 
-    <span class="eyebrow">WELCOME BACK</span>
+        <!-- Left Side -->
 
-    <h1>
-        আবার ফিরে<br>
-        <span>এসো।</span>
-    </h1>
+        <div class="login-intro">
 
-    <p>
-        লগইন করে তোমার নোট শেয়ার করো
-        এবং অন্য শিক্ষার্থীদের নোট ব্যবহার করো।
-    </p>
+            <span class="login-eyebrow">
+                WELCOME BACK
+            </span>
 
-    <div class="upload-tip">
-        ✓ সহজে নোট খুঁজে নাও<br>
-        ✓ শিক্ষার্থীদের সঙ্গে নোট শেয়ার করো<br>
-        ✓ নিজের নোট আপলোড করো
+            <h1>
+                আবার ফিরে<br>
+                <span>এসো Notonomy-তে।</span>
+            </h1>
+
+            <p>
+                তোমার অ্যাকাউন্টে লগইন করো।
+                নিজের নোট খুঁজে নাও, অন্য শিক্ষার্থীদের
+                সঙ্গে জ্ঞান শেয়ার করো এবং একসঙ্গে এগিয়ে চলো।
+            </p>
+
+            <div class="login-benefits">
+
+                <div class="login-benefit">
+                    <span class="login-check">✓</span>
+                    সহজেই প্রয়োজনীয় নোট খুঁজে নাও
+                </div>
+
+                <div class="login-benefit">
+                    <span class="login-check">✓</span>
+                    শিক্ষার্থীদের সঙ্গে নোট শেয়ার করো
+                </div>
+
+                <div class="login-benefit">
+                    <span class="login-check">✓</span>
+                    নিজের নোট আপলোড করো
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Right Side: Login Form -->
+
+        <div class="login-card">
+
+            <div class="login-card-header">
+
+                <span class="small-label">
+                    YOUR ACCOUNT
+                </span>
+
+                <h2>অ্যাকাউন্টে লগইন</h2>
+
+                <p>
+                    তোমার নিবন্ধিত Email ও Password ব্যবহার করো।
+                </p>
+
+            </div>
+
+
+            <form
+                class="login-form"
+                method="post"
+                action="{{ url_for('login') }}"
+            >
+
+                <label>
+                    Email Address *
+
+                    <input
+                        type="email"
+                        name="email"
+                        required
+                        maxlength="254"
+                        autocomplete="email"
+                        placeholder="তোমার ইমেইল"
+                    >
+                </label>
+
+
+                <label>
+                    Password *
+
+                    <input
+                        type="password"
+                        name="password"
+                        required
+                        autocomplete="current-password"
+                        placeholder="তোমার পাসওয়ার্ড"
+                    >
+                </label>
+
+
+                <button
+                    class="login-submit"
+                    type="submit"
+                >
+                    লগইন করো →
+                </button>
+
+            </form>
+
+
+            <p class="login-register">
+                অ্যাকাউন্ট নেই?
+
+                <a href="{{ url_for('register') }}">
+                    রেজিস্ট্রেশন করো
+                </a>
+            </p>
+
+        </div>
+
     </div>
 
-</div>
-
-<form
-    class="upload-form"
-    method="post"
-    action="{{ url_for('login') }}"
->
-
-    <h2>অ্যাকাউন্টে লগইন</h2>
-
-    <p class="muted">
-        তোমার রেজিস্টার করা Email ও Password ব্যবহার করো।
-    </p>
-
-    <label>
-        Email Address *
-
-        <input
-            type="email"
-            name="email"
-            required
-            maxlength="254"
-            autocomplete="email"
-            placeholder="তোমার ইমেইল"
-        >
-    </label>
-
-    <label>
-        Password *
-
-        <input
-            type="password"
-            name="password"
-            required
-            autocomplete="current-password"
-            placeholder="তোমার পাসওয়ার্ড"
-        >
-    </label>
-
-    <button
-        class="button primary full"
-        type="submit"
-    >
-        লগইন করো ↗
-    </button>
-
-    <p class="muted">
-        অ্যাকাউন্ট নেই?
-        <a href="{{ url_for('register') }}">
-            রেজিস্ট্রেশন করো
-        </a>
-    </p>
-
-</form>
-```
-
-</div>
+</section>
 
 {% endblock %}

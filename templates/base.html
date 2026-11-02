@@ -1,26 +1,29 @@
-```html
 <!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{% block title %}Note Hub{% endblock %}</title>
+    <title>{% block title %}Notonomy — Your Knowledge{% endblock %}</title>
 
     <meta name="description"
-          content="Note Hub — শিক্ষার্থীদের নোট খোঁজা, পড়া ও শেয়ার করার প্ল্যাটফর্ম।">
+          content="Notonomy — শিক্ষার্থীদের নোট খোঁজা, পড়া ও শেয়ার করার প্ল্যাটফর্ম।">
+
+    <meta name="theme-color" content="#10432f">
 
     <style>
         :root {
             --primary: #15803d;
-            --primary-dark: #166534;
+            --primary-dark: #10432f;
             --primary-light: #dcfce7;
-            --background: #f8fafc;
-            --surface: #ffffff;
-            --text: #172033;
-            --muted: #64748b;
-            --border: #e2e8f0;
-            --danger: #b91c1c;
+            --accent: #d7ef91;
+            --text: #17251d;
+            --muted: #647067;
+            --background: #f5f8f6;
+            --white: #ffffff;
+            --border: #e2e9e4;
+            --radius: 16px;
+            --shadow: 0 8px 28px rgba(16, 67, 47, 0.08);
         }
 
         * {
@@ -33,174 +36,15 @@
 
         body {
             margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: "Segoe UI", "Noto Sans Bengali", Arial, sans-serif;
             background: var(--background);
             color: var(--text);
-            line-height: 1.6;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
 
         a {
-            color: var(--primary);
+            color: inherit;
             text-decoration: none;
-        }
-
-        a:hover {
-            color: var(--primary-dark);
-        }
-
-        .site-header {
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-inner {
-            width: min(1120px, 92%);
-            min-height: 76px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .brand {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--text);
-            font-size: 25px;
-            font-weight: 800;
-            white-space: nowrap;
-        }
-
-        .brand-icon {
-            font-size: 30px;
-        }
-
-        nav {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        nav > a:not(.nav-button) {
-            color: var(--text);
-            padding: 8px 10px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        nav > a:not(.nav-button):hover {
-            color: var(--primary);
-        }
-
-        .nav-button {
-            display: inline-block;
-            border: 0;
-            border-radius: 9px;
-            padding: 10px 15px;
-            background: var(--primary);
-            color: white;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .nav-button:hover {
-            background: var(--primary-dark);
-            color: white;
-        }
-
-        .nav-secondary {
-            background: #e2e8f0;
-            color: var(--text);
-        }
-
-        .nav-secondary:hover {
-            background: #cbd5e1;
-            color: var(--text);
-        }
-
-        .nav-logout-form {
-            margin: 0;
-        }
-
-        .user-email {
-            color: var(--muted);
-            font-size: 13px;
-            overflow-wrap: anywhere;
-        }
-
-        main {
-            width: min(1120px, 92%);
-            margin: 0 auto;
-            padding: 28px 0 45px;
-            flex: 1;
-        }
-
-        .flash-container {
-            margin: 0 0 22px;
-        }
-
-        .flash-message {
-            padding: 12px 16px;
-            margin-bottom: 10px;
-            border-radius: 9px;
-            border: 1px solid var(--border);
-            background: white;
-            overflow-wrap: anywhere;
-        }
-
-        .flash-message.success {
-            background: #f0fdf4;
-            border-color: #86efac;
-            color: #166534;
-        }
-
-        .flash-message.error,
-        .flash-message.danger {
-            background: #fef2f2;
-            border-color: #fca5a5;
-            color: var(--danger);
-        }
-
-        .flash-message.warning {
-            background: #fffbeb;
-            border-color: #fcd34d;
-            color: #92400e;
-        }
-
-        .flash-message.info {
-            background: #eff6ff;
-            border-color: #93c5fd;
-            color: #1d4ed8;
-        }
-
-        .site-footer {
-            background: white;
-            border-top: 1px solid var(--border);
-            margin-top: auto;
-        }
-
-        .footer-inner {
-            width: min(1120px, 92%);
-            min-height: 65px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            color: var(--muted);
-            font-size: 13px;
         }
 
         button,
@@ -210,56 +54,211 @@
             font: inherit;
         }
 
-        img {
-            max-width: 100%;
-            height: auto;
+        /* Navbar */
+
+        .site-header {
+            width: 100%;
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        @media (max-width: 720px) {
+        .header-inner {
+            max-width: 1440px;
+            min-height: 88px;
+            margin: 0 auto;
+            padding: 16px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+            color: var(--primary-dark);
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            background: var(--primary-light);
+            border-radius: 13px;
+            padding: 7px;
+        }
+
+        .brand-icon svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 14px;
+        }
+
+        nav a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: 0.2s ease;
+        }
+
+        nav a:hover {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+        }
+
+        nav a.login-link {
+            background: #e8edf2;
+            color: #24352b;
+        }
+
+        nav a.register-link {
+            background: var(--primary);
+            color: white;
+        }
+
+        nav a.register-link:hover {
+            background: var(--primary-dark);
+            color: white;
+        }
+
+        /* Main content */
+
+        main {
+            width: 100%;
+            min-height: calc(100vh - 160px);
+        }
+
+        .container {
+            max-width: 1280px;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        /* Footer */
+
+        .site-footer {
+            margin-top: 60px;
+            padding: 28px 6%;
+            background: var(--primary-dark);
+            color: #e7f1e9;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .site-footer p {
+            margin: 0;
+        }
+
+        .site-footer strong {
+            color: var(--accent);
+        }
+
+        /* Responsive */
+
+        @media (max-width: 768px) {
             .header-inner {
-                padding: 14px 0;
-                align-items: flex-start;
+                min-height: auto;
+                padding: 14px 5%;
                 flex-direction: column;
-                gap: 12px;
-            }
-
-            nav {
-                justify-content: flex-start;
-                width: 100%;
-                gap: 7px;
-            }
-
-            nav > a:not(.nav-button) {
-                padding: 8px 6px;
+                gap: 14px;
             }
 
             .brand {
-                font-size: 23px;
+                font-size: 25px;
             }
 
-            .user-email {
-                max-width: 100%;
+            .brand-icon {
+                width: 38px;
+                height: 38px;
             }
 
-            .footer-inner {
-                padding: 15px 0;
-                align-items: flex-start;
-                flex-direction: column;
+            nav {
+                width: 100%;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
+            }
+
+            nav a {
+                padding: 10px 14px;
+                font-size: 14px;
+            }
+
+            .container {
+                width: 92%;
             }
         }
-    </style>
 
+        @media (max-width: 420px) {
+            nav a {
+                padding: 9px 11px;
+                font-size: 13px;
+            }
+        }
+
+        {% block extra_css %}{% endblock %}
+    </style>
     {% block head %}{% endblock %}
 </head>
 
 <body>
 
+    <!-- Navbar -->
     <header class="site-header">
         <div class="header-inner">
 
             <a class="brand" href="{{ url_for('index') }}">
-                <span class="brand-icon">📚</span>
-                <span>Note Hub</span>
+                <span class="brand-icon">
+                    <svg viewBox="0 0 48 48" aria-hidden="true">
+                        <path
+                            d="M8 10.5C8 8.8 9.4 7.5 11.2 7.5H36.8C38.6 7.5 40 8.8 40 10.5V37.5H11.2C9.4 37.5 8 36.2 8 34.5V10.5Z"
+                            fill="currentColor"
+                            opacity=".16"/>
+
+                        <path
+                            d="M12 12H35V34H12C9.8 34 8 35.8 8 38V15.5C8 13.6 9.8 12 12 12Z"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="3"
+                            stroke-linejoin="round"/>
+
+                        <path
+                            d="M18 19H29M18 25H29M18 31H25"
+                            stroke="currentColor"
+                            stroke-width="3"
+                            stroke-linecap="round"/>
+
+                        <path
+                            d="M35 12V34"
+                            stroke="currentColor"
+                            stroke-width="3"
+                            stroke-linecap="round"/>
+                    </svg>
+                </span>
+
+                <span>Notonomy</span>
             </a>
 
             <nav>
@@ -267,67 +266,32 @@
                     নোট খুঁজুন
                 </a>
 
-                {% if session.get('user_id') %}
+                <a href="{{ url_for('login') }}" class="login-link">
+                    লগ ইন
+                </a>
 
-                    <a class="nav-button" href="{{ url_for('upload') }}">
-                        নোট আপলোড
-                    </a>
-
-                    <span class="user-email">
-                        {{ session.get('email', '') }}
-                    </span>
-
-                    <form class="nav-logout-form"
-                          action="{{ url_for('logout') }}"
-                          method="POST">
-                        <button class="nav-button nav-secondary" type="submit">
-                            লগ আউট
-                        </button>
-                    </form>
-
-                {% else %}
-
-                    <a class="nav-button nav-secondary"
-                       href="{{ url_for('login') }}">
-                        লগ ইন
-                    </a>
-
-                    <a class="nav-button"
-                       href="{{ url_for('register') }}">
-                        রেজিস্ট্রেশন
-                    </a>
-
-                {% endif %}
+                <a href="{{ url_for('register') }}" class="register-link">
+                    রেজিস্ট্রেশন
+                </a>
             </nav>
 
         </div>
     </header>
 
+    <!-- Page Content -->
     <main>
-
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-container">
-                    {% for category, message in messages %}
-                        <div class="flash-message {{ category }}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
-
         {% block content %}{% endblock %}
-
     </main>
 
+    <!-- Footer -->
     <footer class="site-footer">
-        <div class="footer-inner">
-            <span>© {{ now.year if now is defined else 2026 }} Note Hub</span>
-            <span>Student-to-Student Learning</span>
-        </div>
+        <p>
+            © 2026 <strong>Notonomy</strong> —
+            Learn together. Share knowledge.
+        </p>
     </footer>
+
+    {% block extra_js %}{% endblock %}
 
 </body>
 </html>
-```

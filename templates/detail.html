@@ -1,126 +1,483 @@
 {% extends "base.html" %}
 
 {% block title %}
-{{ note['title'] }} — CU Notes
+{{ note['title'] }} — Notonomy
+{% endblock %}
+
+
+{% block extra_css %}
+
+/* =========================
+   NOTONOMY DETAIL PAGE
+========================= */
+
+.detail-page {
+    min-height: 75vh;
+    padding: 45px 5% 70px;
+    background:
+        radial-gradient(circle at 5% 5%, #e3f2d7 0, transparent 28%),
+        #f5f8f4;
+}
+
+.detail-container {
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* Back link */
+
+.detail-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: #477252;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 28px;
+    transition: 0.2s ease;
+}
+
+.detail-back:hover {
+    color: #15803d;
+    transform: translateX(-3px);
+}
+
+/* Main layout */
+
+.detail-layout {
+    display: grid;
+    grid-template-columns: 1.35fr 0.75fr;
+    gap: 28px;
+    align-items: start;
+}
+
+/* Main details card */
+
+.detail-card {
+    background: #ffffff;
+    padding: 42px;
+    border: 1px solid #e4ebe3;
+    border-radius: 23px;
+    box-shadow: 0 18px 50px rgba(16, 67, 47, 0.08);
+}
+
+.detail-top {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+}
+
+.detail-pdf-icon {
+    width: 57px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e5f4e3;
+    color: #15803d;
+    border-radius: 13px;
+    font-size: 15px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.detail-semester {
+    display: inline-flex;
+    padding: 8px 14px;
+    background: #edf7e8;
+    color: #347344;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.detail-card h1 {
+    color: #10432f;
+    font-size: clamp(27px, 4vw, 39px);
+    line-height: 1.3;
+    font-weight: 850;
+    letter-spacing: -0.8px;
+    overflow-wrap: anywhere;
+    margin: 0 0 13px;
+}
+
+.detail-course {
+    color: #15803d;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+.detail-description {
+    color: #68776d;
+    font-size: 15px;
+    line-height: 1.9;
+    padding: 20px;
+    background: #f7faf5;
+    border-radius: 13px;
+    margin-bottom: 28px;
+    overflow-wrap: anywhere;
+}
+
+/* Metadata */
+
+.detail-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    padding: 20px 0;
+    border-top: 1px solid #edf1ec;
+    border-bottom: 1px solid #edf1ec;
+    margin-bottom: 27px;
+}
+
+.detail-meta-item {
+    display: grid;
+    gap: 7px;
+    min-width: 0;
+}
+
+.detail-meta-item span {
+    color: #8b968e;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.detail-meta-item strong {
+    color: #294b38;
+    font-size: 14px;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+/* Download button */
+
+.detail-download {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 55px;
+    padding: 14px 20px;
+    background: #15803d;
+    color: #ffffff;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 800;
+    transition: 0.2s ease;
+}
+
+.detail-download:hover {
+    background: #10432f;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 67, 47, 0.18);
+}
+
+.detail-note {
+    color: #8a968d;
+    font-size: 12px;
+    line-height: 1.8;
+    text-align: center;
+    margin: 17px 0 0;
+}
+
+/* Preview card */
+
+.detail-preview {
+    background: #ffffff;
+    padding: 32px 25px;
+    border: 1px solid #e4ebe3;
+    border-radius: 21px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(16, 67, 47, 0.06);
+}
+
+.preview-pdf-icon {
+    width: 85px;
+    height: 95px;
+    margin: 5px auto 23px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e5f4e3;
+    color: #15803d;
+    border-radius: 17px;
+    font-size: 24px;
+    font-weight: 900;
+    position: relative;
+}
+
+.preview-pdf-icon::after {
+    content: "";
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    right: -5px;
+    top: -5px;
+    background: #d7ef91;
+    border-radius: 50%;
+}
+
+.detail-preview h3 {
+    color: #10432f;
+    font-size: 21px;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.detail-preview p {
+    color: #7a887e;
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 23px;
+}
+
+/* Read Online button */
+
+.preview-read {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 50px;
+    padding: 13px 18px;
+    background: #15803d;
+    color: #ffffff;
+    border-radius: 11px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    transition: 0.2s ease;
+}
+
+.preview-read:hover {
+    background: #10432f;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+/* Preview download button */
+
+.preview-download {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 13px 18px;
+    background: #edf7e8;
+    color: #15803d;
+    border: 1px solid #d9ead5;
+    border-radius: 11px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 800;
+    transition: 0.2s ease;
+}
+
+.preview-download:hover {
+    background: #dff0d9;
+    color: #10432f;
+}
+
+/* Responsive */
+
+@media (max-width: 800px) {
+    .detail-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-preview {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 520px) {
+    .detail-page {
+        padding: 30px 4% 50px;
+    }
+
+    .detail-card {
+        padding: 25px 20px;
+        border-radius: 17px;
+    }
+
+    .detail-preview {
+        padding: 27px 20px;
+    }
+
+    .detail-meta {
+        grid-template-columns: 1fr;
+    }
+}
+
 {% endblock %}
 
 
 {% block content %}
 
-<a
-    class="back-link"
-    href="{{ url_for('index') }}"
->
-    ← সব নোটে ফিরে যান
-</a>
+<section class="detail-page">
 
+    <div class="detail-container">
 
-<div class="detail-layout">
-
-    <section class="detail-card">
-
-        <span class="file-icon large">
-            PDF
-        </span>
-
-        <span class="pill">
-            {{ note['semester'] }}
-        </span>
-
-
-        <h1>
-            {{ note['title'] }}
-        </h1>
-
-
-        <p class="course">
-
-            {{ note['course'] }}
-            ·
-            {{ note['department'] }}
-
-        </p>
-
-
-        <p>
-            {{ note['description'] or
-            'কোনো বিবরণ দেওয়া হয়নি।' }}
-        </p>
-
-
-        <div class="meta">
-
-            <span>নোটদাতা</span>
-
-            <strong>
-                {{ note['author'] }}
-            </strong>
-
-        </div>
-
-
-        <div class="meta">
-
-            <span>আপলোড</span>
-
-            <strong>
-                {{ note['created_at'] }}
-            </strong>
-
-        </div>
-
+        <!-- Back link -->
 
         <a
-            class="button primary full"
-            href="{{ url_for(
-                'download',
-                note_id=note['id']
-            ) }}"
+            class="detail-back"
+            href="{{ url_for('index') }}"
         >
-
-            ↓ PDF ডাউনলোড করুন
-
+            ← সব নোটে ফিরে যাও
         </a>
 
 
-        <p class="muted small">
+        <div class="detail-layout">
 
-            ফাইলটি ব্যবহার করার অনুমতি আছে কি না
-            নিশ্চিত হয়ে ব্যবহার করো।
+            <!-- Note Information -->
 
-        </p>
+            <section class="detail-card">
 
-    </section>
+                <div class="detail-top">
+
+                    <div class="detail-pdf-icon">
+                        PDF
+                    </div>
+
+                    <span class="detail-semester">
+                        {{ note['semester'] }}
+                    </span>
+
+                </div>
 
 
-    <aside class="preview-box">
+                <h1>
+                    {{ note['title'] }}
+                </h1>
 
-        <div class="preview-icon">
-            ▤
+
+                <p class="detail-course">
+                    {{ note['course'] }}
+                    ·
+                    {{ note['department'] }}
+                </p>
+
+
+                <div class="detail-description">
+
+                    {{ note['description'] or
+                    'কোনো বিবরণ দেওয়া হয়নি।' }}
+
+                </div>
+
+
+                <!-- Note Metadata -->
+
+                <div class="detail-meta">
+
+                    <div class="detail-meta-item">
+
+                        <span>নোটদাতা</span>
+
+                        <strong>
+                            {{ note['author'] }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-meta-item">
+
+                        <span>আপলোডের তারিখ</span>
+
+                        <strong>
+                            {{ note['created_at'] }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Download -->
+
+                <a
+                    class="detail-download"
+                    href="{{ url_for(
+                        'download',
+                        note_id=note['id']
+                    ) }}"
+                >
+                    ↓ PDF Download করো
+                </a>
+
+
+                <p class="detail-note">
+                    ফাইলটি ব্যবহার করার আগে শেয়ার করার অনুমতি আছে কি না
+                    নিশ্চিত হয়ে ব্যবহার করো।
+                </p>
+
+            </section>
+
+
+            <!-- PDF Preview Card -->
+
+            <aside class="detail-preview">
+
+                <div class="preview-pdf-icon">
+                    PDF
+                </div>
+
+
+                <h3>
+                    PDF নোট
+                </h3>
+
+
+                <p>
+                    এই নোটের PDF ফাইলটি ডাউনলোড করার আগেই
+                    অনলাইনে পড়তে পারো।
+                </p>
+
+
+                <!-- Read Online -->
+
+                <a
+                    class="preview-read"
+                    href="{{ url_for(
+                        'preview',
+                        note_id=note['id']
+                    ) }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    📖 Read Online
+                </a>
+
+
+                <!-- Download -->
+
+                <a
+                    class="preview-download"
+                    href="{{ url_for(
+                        'download',
+                        note_id=note['id']
+                    ) }}"
+                >
+                    ↓ PDF Download করো
+                </a>
+
+            </aside>
+
         </div>
 
-        <h3>
-            PDF নোট
-        </h3>
+    </div>
 
-        <p>
-            এই সংস্করণে PDF ফাইল ডাউনলোড করা যাবে।
-        </p>
-
-        <a
-            class="button secondary"
-            href="{{ url_for(
-                'download',
-                note_id=note['id']
-            ) }}"
-        >
-
-            ফাইল ডাউনলোড
-
-        </a>
-
-    </aside>
-
-</div>
+</section>
 
 {% endblock %}

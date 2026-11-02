@@ -1,98 +1,402 @@
 {% extends "base.html" %}
 
-{% block title %}রেজিস্ট্রেশন — Note Hub{% endblock %}
+{% block title %}Register — Notonomy{% endblock %}
+
+{% block extra_css %}
+
+/* =========================
+   NOTONOMY REGISTER PAGE
+========================= */
+
+.register-page {
+    min-height: 75vh;
+    padding: 65px 6%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(circle at 10% 10%, #e3f2d7 0, transparent 30%),
+        #f5f8f4;
+}
+
+.register-container {
+    width: 100%;
+    max-width: 1100px;
+    display: grid;
+    grid-template-columns: 1fr 0.9fr;
+    align-items: center;
+    gap: 65px;
+}
+
+/* Left introduction */
+
+.register-intro {
+    padding: 25px 0;
+}
+
+.register-eyebrow {
+    display: inline-block;
+    color: #15803d;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    margin-bottom: 22px;
+}
+
+.register-intro h1 {
+    color: #10432f;
+    font-size: clamp(38px, 5vw, 62px);
+    line-height: 1.15;
+    font-weight: 850;
+    letter-spacing: -2px;
+    margin: 0 0 22px;
+}
+
+.register-intro h1 span {
+    color: #75a83b;
+}
+
+.register-intro > p {
+    max-width: 480px;
+    color: #65736a;
+    font-size: 17px;
+    line-height: 1.9;
+}
+
+.register-benefits {
+    margin-top: 35px;
+    display: grid;
+    gap: 16px;
+}
+
+.register-benefit {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    color: #294b38;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.register-check {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #dff2cf;
+    color: #15803d;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+/* Registration card */
+
+.register-card {
+    background: #ffffff;
+    padding: 38px 42px;
+    border: 1px solid #e4ebe3;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(16, 67, 47, 0.10);
+}
+
+.register-card-header {
+    margin-bottom: 25px;
+}
+
+.register-card-header .small-label {
+    color: #15803d;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.register-card-header h2 {
+    color: #10432f;
+    font-size: 30px;
+    margin: 12px 0 8px;
+    font-weight: 800;
+}
+
+.register-card-header p {
+    color: #77837a;
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* Form */
+
+.register-form {
+    display: grid;
+    gap: 16px;
+}
+
+.register-form label {
+    display: grid;
+    gap: 8px;
+    color: #294b38;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.register-form input {
+    width: 100%;
+    min-height: 49px;
+    padding: 12px 15px;
+    border: 1px solid #dce6dd;
+    border-radius: 11px;
+    background: #fbfdfb;
+    color: #17251d;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+.register-form input:focus {
+    border-color: #15803d;
+    box-shadow: 0 0 0 4px rgba(21, 128, 61, 0.10);
+    background: #ffffff;
+}
+
+.register-form input::placeholder {
+    color: #a2aca4;
+}
+
+.register-submit {
+    width: 100%;
+    min-height: 53px;
+    border: none;
+    border-radius: 12px;
+    background: #15803d;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.2s ease;
+    margin-top: 5px;
+}
+
+.register-submit:hover {
+    background: #10432f;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 67, 47, 0.18);
+}
+
+.register-login {
+    text-align: center;
+    color: #77837a;
+    font-size: 14px;
+    margin: 22px 0 0;
+}
+
+.register-login a {
+    color: #15803d;
+    font-weight: 800;
+}
+
+.register-login a:hover {
+    color: #10432f;
+    text-decoration: underline;
+}
+
+/* Responsive */
+
+@media (max-width: 800px) {
+    .register-page {
+        padding: 40px 5%;
+    }
+
+    .register-container {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        max-width: 520px;
+    }
+
+    .register-intro {
+        text-align: center;
+    }
+
+    .register-intro > p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .register-benefits {
+        display: inline-grid;
+        text-align: left;
+    }
+}
+
+@media (max-width: 480px) {
+    .register-card {
+        padding: 28px 22px;
+        border-radius: 18px;
+    }
+
+    .register-card-header h2 {
+        font-size: 25px;
+    }
+
+    .register-intro h1 {
+        font-size: 39px;
+    }
+}
+
+{% endblock %}
+
 
 {% block content %}
 
-<div class="form-layout">
+<section class="register-page">
 
-```
-<div class="form-intro">
-    <span class="eyebrow">JOIN NOTE HUB</span>
+    <div class="register-container">
 
-    <h1>
-        তোমার অ্যাকাউন্ট<br>
-        <span>তৈরি করো।</span>
-    </h1>
+        <!-- Left Side -->
 
-    <p>
-        বিশ্ববিদ্যালয়ের শিক্ষার্থীদের সঙ্গে নোট শেয়ার করো
-        এবং নিজের পড়াশোনাকে আরও সহজ করো।
-    </p>
-</div>
+        <div class="register-intro">
 
-<form class="upload-form" method="post" action="{{ url_for('register') }}">
+            <span class="register-eyebrow">
+                JOIN NOTONOMY
+            </span>
 
-    <h2>নতুন অ্যাকাউন্ট</h2>
+            <h1>
+                তোমার অ্যাকাউন্ট<br>
+                <span>তৈরি করো।</span>
+            </h1>
 
-    <p class="muted">
-        সব ঘর পূরণ করা বাধ্যতামূলক।
-    </p>
+            <p>
+                Notonomy-তে যোগ দাও।
+                বিশ্ববিদ্যালয়ের শিক্ষার্থীদের সঙ্গে
+                নোট শেয়ার করো এবং নিজের পড়াশোনাকে
+                আরও সহজ করে তোলো।
+            </p>
 
-    <label>
-        Student ID *
+            <div class="register-benefits">
 
-        <input
-            type="text"
-            name="student_id"
-            required
-            maxlength="50"
-            autocomplete="username"
-            placeholder="তোমার Student ID"
-        >
-    </label>
+                <div class="register-benefit">
+                    <span class="register-check">✓</span>
+                    নিজের Student ID দিয়ে যুক্ত হও
+                </div>
 
-    <label>
-        Email Address *
+                <div class="register-benefit">
+                    <span class="register-check">✓</span>
+                    প্রয়োজনীয় নোট খুঁজে নাও
+                </div>
 
-        <input
-            type="email"
-            name="email"
-            required
-            maxlength="254"
-            autocomplete="email"
-            placeholder="তোমার ইমেইল"
-        >
-    </label>
+                <div class="register-benefit">
+                    <span class="register-check">✓</span>
+                    নিজের নোট শেয়ার করো
+                </div>
 
-    <label>
-        Password *
+            </div>
 
-        <input
-            type="password"
-            name="password"
-            required
-            minlength="8"
-            autocomplete="new-password"
-            placeholder="কমপক্ষে ৮ অক্ষর"
-        >
-    </label>
+        </div>
 
-    <label>
-        Confirm Password *
 
-        <input
-            type="password"
-            name="confirm_password"
-            required
-            minlength="8"
-            autocomplete="new-password"
-            placeholder="পাসওয়ার্ড আবার লিখো"
-        >
-    </label>
+        <!-- Registration Form -->
 
-    <button class="button primary full" type="submit">
-        অ্যাকাউন্ট তৈরি করো ↗
-    </button>
+        <div class="register-card">
 
-    <p class="muted">
-        আগে থেকেই অ্যাকাউন্ট আছে?
-        <a href="{{ url_for('login') }}">লগইন করো</a>
-    </p>
+            <div class="register-card-header">
 
-</form>
-```
+                <span class="small-label">
+                    CREATE ACCOUNT
+                </span>
 
-</div>
+                <h2>নতুন অ্যাকাউন্ট</h2>
+
+                <p>
+                    নিচের সব তথ্য সঠিকভাবে পূরণ করো।
+                </p>
+
+            </div>
+
+
+            <form
+                class="register-form"
+                method="post"
+                action="{{ url_for('register') }}"
+            >
+
+                <label>
+                    Student ID *
+
+                    <input
+                        type="text"
+                        name="student_id"
+                        required
+                        maxlength="50"
+                        autocomplete="username"
+                        placeholder="তোমার Student ID"
+                    >
+                </label>
+
+
+                <label>
+                    Email Address *
+
+                    <input
+                        type="email"
+                        name="email"
+                        required
+                        maxlength="254"
+                        autocomplete="email"
+                        placeholder="তোমার ইমেইল"
+                    >
+                </label>
+
+
+                <label>
+                    Password *
+
+                    <input
+                        type="password"
+                        name="password"
+                        required
+                        minlength="8"
+                        autocomplete="new-password"
+                        placeholder="কমপক্ষে ৮ অক্ষর"
+                    >
+                </label>
+
+
+                <label>
+                    Confirm Password *
+
+                    <input
+                        type="password"
+                        name="confirm_password"
+                        required
+                        minlength="8"
+                        autocomplete="new-password"
+                        placeholder="পাসওয়ার্ড আবার লিখো"
+                    >
+                </label>
+
+
+                <button
+                    class="register-submit"
+                    type="submit"
+                >
+                    অ্যাকাউন্ট তৈরি করো →
+                </button>
+
+            </form>
+
+
+            <p class="register-login">
+                আগে থেকেই অ্যাকাউন্ট আছে?
+
+                <a href="{{ url_for('login') }}">
+                    লগইন করো
+                </a>
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
 
 {% endblock %}

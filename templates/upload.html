@@ -1,155 +1,541 @@
 {% extends "base.html" %}
 
-{% block title %}
-নোট আপলোড — CU Notes
+{% block title %}Upload Notes — Notonomy{% endblock %}
+
+{% block extra_css %}
+
+/* =========================
+   NOTONOMY UPLOAD PAGE
+========================= */
+
+.upload-page {
+    background:
+        radial-gradient(circle at 5% 5%, #e3f2d7 0, transparent 28%),
+        #f5f8f4;
+    padding: 55px 5%;
+}
+
+.upload-container {
+    max-width: 1150px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 55px;
+    align-items: start;
+}
+
+/* Intro section */
+
+.upload-intro {
+    position: sticky;
+    top: 100px;
+    padding-top: 35px;
+}
+
+.upload-eyebrow {
+    display: inline-block;
+    color: #15803d;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    margin-bottom: 22px;
+}
+
+.upload-intro h1 {
+    font-size: clamp(38px, 5vw, 58px);
+    line-height: 1.2;
+    color: #10432f;
+    font-weight: 850;
+    letter-spacing: -1.5px;
+    margin: 0 0 22px;
+}
+
+.upload-intro h1 span {
+    color: #75a83b;
+}
+
+.upload-intro > p {
+    color: #68776d;
+    font-size: 16px;
+    line-height: 1.9;
+    max-width: 400px;
+}
+
+/* Tips */
+
+.upload-tips {
+    margin-top: 35px;
+    padding: 23px;
+    background: #ffffff;
+    border: 1px solid #e2ebe1;
+    border-radius: 17px;
+    box-shadow: 0 8px 25px rgba(16, 67, 47, 0.05);
+}
+
+.upload-tips h3 {
+    color: #10432f;
+    font-size: 16px;
+    margin: 0 0 18px;
+}
+
+.upload-tip-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #52675a;
+    font-size: 14px;
+    margin: 13px 0;
+}
+
+.upload-tip-icon {
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e3f5df;
+    color: #15803d;
+    border-radius: 50%;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+/* Form card */
+
+.upload-card {
+    background: #ffffff;
+    padding: 38px;
+    border: 1px solid #e4ebe3;
+    border-radius: 23px;
+    box-shadow: 0 20px 55px rgba(16, 67, 47, 0.09);
+}
+
+.upload-card-header {
+    margin-bottom: 28px;
+}
+
+.upload-card-header span {
+    color: #15803d;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.upload-card-header h2 {
+    color: #10432f;
+    font-size: 29px;
+    font-weight: 800;
+    margin: 12px 0 8px;
+}
+
+.upload-card-header p {
+    color: #849087;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* Form elements */
+
+.upload-form {
+    display: grid;
+    gap: 18px;
+}
+
+.upload-form label:not(.upload-checkbox) {
+    display: grid;
+    gap: 9px;
+    color: #294b38;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.upload-form input:not([type="checkbox"]):not([type="file"]),
+.upload-form select,
+.upload-form textarea {
+    width: 100%;
+    min-height: 49px;
+    padding: 12px 14px;
+    border: 1px solid #dce6dd;
+    border-radius: 11px;
+    background: #fbfdfb;
+    color: #253b2c;
+    outline: none;
+    font-size: 14px;
+    transition: 0.2s ease;
+}
+
+.upload-form textarea {
+    resize: vertical;
+    min-height: 95px;
+    line-height: 1.6;
+}
+
+.upload-form input:focus,
+.upload-form select:focus,
+.upload-form textarea:focus {
+    border-color: #15803d;
+    box-shadow: 0 0 0 4px rgba(21, 128, 61, 0.09);
+    background: #ffffff;
+}
+
+.upload-form input::placeholder,
+.upload-form textarea::placeholder {
+    color: #a2aca4;
+}
+
+.upload-form select:disabled {
+    background: #f1f5f1;
+    color: #9aa59c;
+    cursor: not-allowed;
+}
+
+.upload-form select {
+    cursor: pointer;
+}
+
+/* Two column fields */
+
+.upload-form .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.upload-form .form-row label {
+    min-width: 0;
+}
+
+/* File upload */
+
+.upload-form .file-picker {
+    padding: 20px;
+    background: #f5faf3;
+    border: 1.5px dashed #a9cda6;
+    border-radius: 14px;
+}
+
+.upload-form input[type="file"] {
+    width: 100%;
+    color: #52675a;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.upload-form input[type="file"]::file-selector-button {
+    padding: 9px 13px;
+    margin-right: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #dff2df;
+    color: #15803d;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.upload-form .file-picker small {
+    color: #829087;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* Checkbox */
+
+.upload-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    padding: 15px;
+    background: #f7faf5;
+    border-radius: 11px;
+    color: #58695e;
+    font-size: 13px;
+    line-height: 1.7;
+    cursor: pointer;
+}
+
+.upload-checkbox input {
+    width: 17px;
+    height: 17px;
+    margin-top: 3px;
+    accent-color: #15803d;
+    flex-shrink: 0;
+}
+
+/* Submit button */
+
+.upload-submit {
+    width: 100%;
+    min-height: 53px;
+    border: none;
+    border-radius: 12px;
+    background: #15803d;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.upload-submit:hover {
+    background: #10432f;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 67, 47, 0.18);
+}
+
+/* Responsive */
+
+@media (max-width: 850px) {
+    .upload-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        max-width: 650px;
+    }
+
+    .upload-intro {
+        position: static;
+        padding-top: 0;
+    }
+
+    .upload-intro h1 {
+        font-size: 43px;
+    }
+}
+
+@media (max-width: 520px) {
+    .upload-page {
+        padding: 30px 4%;
+    }
+
+    .upload-card {
+        padding: 25px 19px;
+        border-radius: 17px;
+    }
+
+    .upload-form .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .upload-card-header h2 {
+        font-size: 25px;
+    }
+}
+
 {% endblock %}
+
 
 {% block content %}
 
-<div class="form-layout">
+<section class="upload-page">
 
-```
-<div class="form-intro">
+    <div class="upload-container">
 
-    <span class="eyebrow">
-        CONTRIBUTE TO THE LIBRARY
-    </span>
+        <!-- Left Introduction -->
 
-    <h1>
-        তোমার নোট<br>
-        <span>শেয়ার করো।</span>
-    </h1>
+        <div class="upload-intro">
 
-    <p>
-        তোমার তৈরি পরিষ্কার ও উপকারী নোট
-        অন্য শিক্ষার্থীদের সাহায্য করতে পারে।
-    </p>
+            <span class="upload-eyebrow">
+                CONTRIBUTE TO THE LIBRARY
+            </span>
 
-    <div class="upload-tip">
-        ✓ PDF format only<br>
-        ✓ Maximum file size: 20 MB<br>
-        ✓ Upload only notes you can share
+            <h1>
+                তোমার নোট<br>
+                <span>শেয়ার করো।</span>
+            </h1>
+
+            <p>
+                তোমার তৈরি পরিষ্কার ও উপকারী নোট
+                অন্য শিক্ষার্থীদের পড়াশোনায় সাহায্য
+                করতে পারে। আজই Notonomy-তে অবদান রাখো।
+            </p>
+
+            <div class="upload-tips">
+
+                <h3>Upload Guidelines</h3>
+
+                <div class="upload-tip-item">
+                    <span class="upload-tip-icon">✓</span>
+                    PDF format only
+                </div>
+
+                <div class="upload-tip-item">
+                    <span class="upload-tip-icon">✓</span>
+                    Maximum file size: 20 MB
+                </div>
+
+                <div class="upload-tip-item">
+                    <span class="upload-tip-icon">✓</span>
+                    Upload only notes you can share
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Upload Form -->
+
+        <div class="upload-card">
+
+            <div class="upload-card-header">
+
+                <span>SHARE YOUR KNOWLEDGE</span>
+
+                <h2>নোট আপলোড করো</h2>
+
+                <p>
+                    * চিহ্নিত সব ঘর পূরণ করা বাধ্যতামূলক।
+                </p>
+
+            </div>
+
+
+            <form
+                class="upload-form"
+                method="post"
+                enctype="multipart/form-data"
+            >
+
+                <label>
+                    নোটের শিরোনাম *
+
+                    <input
+                        name="title"
+                        required
+                        maxlength="150"
+                        placeholder="যেমন: Introduction to Microeconomics"
+                    >
+                </label>
+
+
+                <div class="form-row">
+
+                    <label>
+                        বিভাগ *
+
+                        <input
+                            name="department"
+                            required
+                            value="Economics"
+                            placeholder="Economics"
+                        >
+                    </label>
+
+
+                    <label>
+                        নোটদাতার নাম *
+
+                        <input
+                            name="author"
+                            required
+                            maxlength="80"
+                            placeholder="তোমার নাম"
+                        >
+                    </label>
+
+                </div>
+
+
+                <label>
+                    সেমিস্টার নির্বাচন করো *
+
+                    <select name="semester" id="semester" required>
+
+                        <option value="">
+                            -- Semester নির্বাচন করো --
+                        </option>
+
+                        <option value="1st year 1st semester">
+                            1st Semester
+                        </option>
+
+                        <option value="1st year 2nd semester">
+                            2nd Semester
+                        </option>
+
+                    </select>
+                </label>
+
+
+                <label>
+                    কোর্স নির্বাচন করো *
+
+                    <select name="course" id="course" required disabled>
+
+                        <option value="">
+                            -- আগে Semester নির্বাচন করো --
+                        </option>
+
+                    </select>
+                </label>
+
+
+                <label>
+                    সংক্ষিপ্ত বিবরণ
+
+                    <textarea
+                        name="description"
+                        rows="3"
+                        maxlength="500"
+                        placeholder="এই নোটে কী কী বিষয় আছে?"
+                    ></textarea>
+                </label>
+
+
+                <label class="file-picker">
+
+                    PDF ফাইল নির্বাচন করো *
+
+                    <input
+                        type="file"
+                        name="note_file"
+                        accept=".pdf,application/pdf"
+                        required
+                    >
+
+                    <small>
+                        শুধু PDF · সর্বোচ্চ ২০ MB
+                    </small>
+
+                </label>
+
+
+                <label class="upload-checkbox">
+
+                    <input type="checkbox" required>
+
+                    <span>
+                        আমি নিশ্চিত করছি যে এই ফাইলটি আমার নিজের তৈরি
+                        অথবা আমার এটি শেয়ার করার অনুমতি আছে।
+                    </span>
+
+                </label>
+
+
+                <button
+                    class="upload-submit"
+                    type="submit"
+                >
+                    নোট আপলোড করো →
+                </button>
+
+            </form>
+
+        </div>
+
     </div>
 
-</div>
+</section>
 
-<form
-    class="upload-form"
-    method="post"
-    enctype="multipart/form-data"
->
-
-    <h2>নোটের তথ্য</h2>
-
-    <p class="muted">
-        * চিহ্নিত সব ঘর পূরণ করতে হবে।
-    </p>
-
-    <label>
-        নোটের শিরোনাম *
-
-        <input
-            name="title"
-            required
-            maxlength="150"
-            placeholder="যেমন: Introduction to Microeconomics"
-        >
-    </label>
-
-    <div class="form-row">
-
-        <label>
-            বিভাগ *
-
-            <input
-                name="department"
-                required
-                value="Economics"
-                placeholder="Economics"
-            >
-        </label>
-
-        <label>
-            নোটদাতার নাম *
-
-            <input
-                name="author"
-                required
-                maxlength="80"
-                placeholder="তোমার নাম"
-            >
-        </label>
-
-    </div>
-
-    <label>
-        সেমিস্টার নির্বাচন করো *
-
-        <select name="semester" id="semester" required>
-            <option value="">-- Semester নির্বাচন করো --</option>
-            <option value="1st year 1st semester">1st Semester</option>
-            <option value="1st year 2nd semester">2nd Semester</option>
-        </select>
-    </label>
-
-    <label>
-        কোর্স নির্বাচন করো *
-
-        <select name="course" id="course" required disabled>
-            <option value="">-- আগে Semester নির্বাচন করো --</option>
-        </select>
-    </label>
-
-    <label>
-        সংক্ষিপ্ত বিবরণ
-
-        <textarea
-            name="description"
-            rows="3"
-            maxlength="500"
-            placeholder="এই নোটে কী কী বিষয় আছে?"
-        ></textarea>
-    </label>
-
-    <label class="file-picker">
-        PDF ফাইল নির্বাচন করো *
-
-        <input
-            type="file"
-            name="note_file"
-            accept=".pdf,application/pdf"
-            required
-        >
-
-        <small>শুধু PDF · সর্বোচ্চ ২০ MB</small>
-    </label>
-
-    <label class="checkbox">
-        <input type="checkbox" required>
-
-        আমি নিশ্চিত করছি যে এই ফাইলটি আমার নিজের তৈরি
-        অথবা আমার এটি শেয়ার করার অনুমতি আছে।
-    </label>
-
-    <button
-        class="button primary full"
-        type="submit"
-    >
-        নোট আপলোড করুন ↗
-    </button>
-
-</form>
-```
-
-</div>
 
 <script>
+
 document.addEventListener("DOMContentLoaded", function () {
 
     const semesterSelect = document.getElementById("semester");
     const courseSelect = document.getElementById("course");
 
     const coursesBySemester = {
+
         "1st year 1st semester": [
             "Macroeconomics",
             "Microeconomics",
@@ -168,7 +554,9 @@ document.addEventListener("DOMContentLoaded", function () {
             "Fundamentals of Computing",
             "Comprehensive"
         ]
+
     };
+
 
     semesterSelect.addEventListener("change", function () {
 
@@ -177,24 +565,34 @@ document.addEventListener("DOMContentLoaded", function () {
         courseSelect.innerHTML = "";
 
         const placeholder = document.createElement("option");
+
         placeholder.value = "";
+
         placeholder.textContent = courses.length
             ? "-- কোর্স নির্বাচন করো --"
             : "-- আগে Semester নির্বাচন করো --";
 
         courseSelect.appendChild(placeholder);
 
+
         courses.forEach(function (courseName) {
+
             const option = document.createElement("option");
+
             option.value = courseName;
             option.textContent = courseName;
+
             courseSelect.appendChild(option);
+
         });
 
+
         courseSelect.disabled = courses.length === 0;
+
     });
 
 });
+
 </script>
 
 {% endblock %}

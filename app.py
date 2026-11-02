@@ -599,6 +599,40 @@ def logout():
     flash("তুমি সফলভাবে Logout করেছ।", "success")
     return redirect(url_for("index"))
 
+# ==========================================
+# PREVIEW PDF
+# ==========================================
 
+@app.route("/preview/<int:note_id>")
+def preview(note_id):
+    note = get_note_by_id(note_id)
+
+    if not note:
+        abort(404)
+
+    storage_path = note.get("filename")
+
+    if not storage_path:
+        abort(404)
+
+    try:
+        file_bytes = (
+            supabase.storage
+            .from_(BUCKET_NAME)
+            .download(storage_path)
+        )
+
+    except Exception:
+        app.logger.exception("PDF preview failed")
+        abort(404)
+
+    return send_file(
+        io.BytesIO(file_bytes),
+        mimetype="application/pdf",
+        as_attachment=False,
+        download_name=(
+            note.get("original_filename") or "note.pdf"
+        ),
+    )
 if __name__ == "__main__":
     app.run(debug=True)
